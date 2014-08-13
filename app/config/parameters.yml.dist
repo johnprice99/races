@@ -17,3 +17,7 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    site.name: "JP Races"
+    jp.mailer.from_address: "noreply@jp-races.local"
+    jp.mailer.from_name: "JP Races"

@@ -1,0 +1,24 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Register{% endblock %}
+
+{% block fos_user_content %}
+	<h1>Register</h1>
+
+	{% include '::flashMessages.html.twig' %}
+
+	<form action="{{ path('fos_user_registration_register') }}" method="post" autocomplete="off">
+
+		{{ form_row(form.firstName) }}
+		{{ form_row(form.lastName) }}
+		{{ form_row(form.email) }}
+		{{ form_row(form.plainPassword) }}
+		{{ form_rest(form) }}
+
+		<div class="formRow">
+			<button type="submit">{{ 'registration.submit'|trans }}</button>
+		</div>
+	</form>
+{% endblock fos_user_content %}

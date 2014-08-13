@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ user.fullName }} | Edit User{% endblock %}
+
+{% block body %}
+	<h2>Edit User: {{ user.fullName }}</h2>
+
+	{% include '::flashMessages.html.twig' %}
+
+	{{ form(form) }}
+{% endblock %}

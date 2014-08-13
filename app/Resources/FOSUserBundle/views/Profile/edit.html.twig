@@ -1,0 +1,28 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}My Account{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+	<h1>Account Settings</h1>
+
+	{% include '::flashMessages.html.twig' %}
+
+	<p>If you would like to change your password, <a href="{{ path('fos_user_change_password') }}">click here</a></p>
+
+	<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+		{{ form_row(form.firstName) }}
+		{{ form_row(form.lastName) }}
+		{{ form_row(form.email) }}
+
+		<p>We need you to enter your current password to accept changes to your account.</p>
+		{{ form_row(form.current_password) }}
+
+		<div class="formRow">
+			<button type="submit">{{ 'profile.edit.submit'|trans }}</button>
+		</div>
+
+		{{ form_rest(form) }}
+	</form>
+{% endblock fos_user_content %}

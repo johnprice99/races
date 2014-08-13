@@ -1,0 +1,38 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Log in{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+	<h1>Log in</h1>
+
+	{% if error %}
+		<div class="flashError">{{ error|trans }}</div>
+	{% endif %}
+
+	<form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off">
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+		<div class="formRow">
+			<label for="username" class="required">{{ 'security.login.username'|trans }}</label>
+			<input type="text" id="username" name="_username" value="{{ last_username }}" required="required" class="email" data-msg-required="Please enter your email address" />
+		</div>
+
+		<div class="formRow">
+			<label for="password" class="required">{{ 'security.login.password'|trans }}</label>
+			<input type="password" id="password" name="_password" required="required" data-msg-required="Please enter your password" />
+		</div>
+
+		<div class="formRow clearfix">
+			<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+			<label for="remember_me" class="required checkboxLabel">{{ 'security.login.remember_me'|trans }}</label>
+		</div>
+
+		<div class="formRow">
+			<button type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+		</div>
+	</form>
+
+	<p style="text-align:right; margin-top:25px;"><a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a></p>
+{% endblock fos_user_content %}

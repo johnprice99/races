@@ -1,0 +1,40 @@
+services:
+    jp.form.type.user:
+        class: JP\UserBundle\Form\Type\UserType
+        arguments: ["@security.context", "@security.role_hierarchy"]
+        tags:
+            - { name: form.type, alias: user }
+
+    jp_user.registration.form.type:
+        class: JP\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: jp_user_registration }
+
+    jp_user.profile.form.type:
+        class: JP\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: jp_user_profile }
+
+    jp_user.change_password.form.type:
+        class: JP\UserBundle\Form\Type\ChangePasswordFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: jp_user_change_password }
+
+    jp_user.resetting.form.type:
+        class: JP\UserBundle\Form\Type\ResettingFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: jp_user_resetting }
+
+    jp_user.registration_events:
+        class: JP\UserBundle\EventListener\RegistrationListener
+        arguments: [@router]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    jp.mailer:
+        class: JP\UserBundle\Service\JPMailer
+        arguments: [@mailer, @router, @twig, { from_address: "%jp.mailer.from_address%", from_name: "%jp.mailer.from_name%" }]

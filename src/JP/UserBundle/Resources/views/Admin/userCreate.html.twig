@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}User | Create New{% endblock %}
+
+{% block body %}
+	<h2>New User</h2>
+
+	{% include '::flashMessages.html.twig' %}
+
+	{{ form(form) }}
+{% endblock %}

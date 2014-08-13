@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ siteName }} | All Users{% endblock %}
+
+{% block body %}
+	<h1>All Users</h1>
+	{% if is_granted("ROLE_ADMIN") %}
+		<p><a href="{{ path('user_create') }}">Add User</a></p>
+	{% endif %}
+	<ul>
+		{% for user in allUsers %}
+			{% if user.id != app.user.id %}
+				<li><a href="{{ path('user_edit', {'id' : user.id}) }}">{{ user.fullName }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endblock %}
