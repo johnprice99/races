@@ -25,4 +25,5 @@ assetic:
     use_controller: "%use_assetic_controller%"
 
 swiftmailer:
+    disable_delivery: true
     delivery_address: johnprice99@gmail.com

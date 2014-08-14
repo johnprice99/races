@@ -5,6 +5,7 @@
 {% block title %}Registration complete | Register{% endblock %}
 
 {% block fos_user_content %}
+	<h1>Account activated</h1>
 	<p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
 	<p><a href="{{ path('fos_user_profile_edit') }}">Account settings</a></p>
 	{% if app.session is not empty %}

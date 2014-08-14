@@ -8,9 +8,18 @@ framework:
     profiler:
         collect: false
 
+doctrine:
+    dbal:
+        dbname: races_test
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true
+
+fos_user:
+    registration:
+        confirmation:
+            enabled: false

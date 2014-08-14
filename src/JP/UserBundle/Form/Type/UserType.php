@@ -79,8 +79,8 @@ class UserType extends AbstractType {
 				'multiple' => true,
 				'choices' => $this->refactorRoles($options['roles'])
 			))
-			->add('enabled', 'checkbox', array(
-				'label' => 'Active',
+			->add('locked', 'checkbox', array(
+				'label' => 'Locked',
 				'label_attr' => array(
 					'class' => 'checkboxLabel',
 				),

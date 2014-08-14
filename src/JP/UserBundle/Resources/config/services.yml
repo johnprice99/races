@@ -29,8 +29,8 @@ services:
         tags:
             - { name: form.type, alias: jp_user_resetting }
 
-    jp_user.registration_events:
-        class: JP\UserBundle\EventListener\RegistrationListener
+    jp_user.events:
+        class: JP\UserBundle\EventListener\UserEventListener
         arguments: [@router]
         tags:
             - { name: kernel.event_subscriber }

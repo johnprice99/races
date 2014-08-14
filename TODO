@@ -1,9 +1,4 @@
--- User Account --
-
-* Create some positive functional tests:
-	- Load homepage -> click register -> register fully
-	- Load homepage -> click login -> successful login
+-- NEW FEATURES --
 
 -- BUGS --
 
-* FOSUserBundle - deactivating a user, then forgotten password - this re-enables the user

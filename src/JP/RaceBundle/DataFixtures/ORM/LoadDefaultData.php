@@ -25,7 +25,7 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 		$user->setEmail('johnprice99@gmail.com');
 		$user->setFirstName('John');
 		$user->setLastName('Price');
-		$user->setPlainPassword('u8MYfish');
+		$user->setPlainPassword('myPass123');
 		$user->setEnabled(true);
 		$user->addRole('ROLE_ADMIN');
 
