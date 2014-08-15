@@ -1,4 +1,14 @@
 -- NEW FEATURES --
 
+* Create a race object
+	- 6 entrants (random)
+	- Generate odds
+	- Simple race engine to find winner
+* show race on webpage
+* allow user to bet money
+* when race complete, pay any necessary winnings to the winners (cron? button?)
+* create pages to see owners and their stables (each horses last 5 race results)
+* store race results from horses
+
 -- BUGS --
 
