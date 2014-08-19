@@ -3,6 +3,7 @@
 namespace JP\RaceBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use JP\RaceBundle\Entity\Race;
 
 class RaceEngine {
@@ -16,27 +17,79 @@ class RaceEngine {
 	public function run(Race $race) {
 		$entries = $race->getEntries();
 
-		$finalPositions = $entries->toArray();
-		shuffle($finalPositions);
+		foreach ($entries as $entry) {
 
-		foreach ($finalPositions as $i => $e) {
-			echo $i+1 . ': ' . $e->getHorse()->getName()."<br />";
+			//start with the raw probability from he ODDs
+			$score = $entry->getProbability();
+
+			//roll 3 random d20 rolls (including subtracting) and add the results to the score - do actual 3 rolls make it more random?
+			$score += mt_rand(-20, 20);
+			$score += mt_rand(-20, 20);
+			$score += mt_rand(-20, 20);
+
+			//randomise the decimal
+			$score += number_format(mt_rand() / mt_getrandmax(), 2);
+
+			//did the horse have an incident during the race? (this should be quite rare)
+			if (mt_rand(1, 200) <= 8) {
+				$score = -1;
+			}
+			elseif ($score < 0) {
+				$score = 0;
+			}
+
+			$entry->setScore($score);
 		}
 
-		//$winner = $entries->get(array_rand($entries->toArray()));
+		//sort the results by score
+		$iterator = $entries->getIterator();
+		$iterator->uasort(function ($first, $second) {
+			if ($first->getScore() === $second->getScore()) { return 0; }
+			return $first->getScore() > $second->getScore() ? -1 : 1;
+		});
+		$finalPositions = new ArrayCollection(iterator_to_array($iterator));
 
-		//update the horses last positions (see below)
+		//loop through final placings
+		$i = 1;
+		foreach ($finalPositions as $entry) {
+			$form = $i;
+			if ($i > 9) { $form = 0; }
 
-//		print_r($winner->getHorse()->getName());
-		die();
+			//if the score is 0, we need to pick what the problem was
+			if ($entry->getScore() === -1) {
+				switch(mt_rand(1, 4)) {
+					case 1:
+						$form = 'S';
+						break;
+					case 2:
+						$form = 'U';
+						break;
+					case 3:
+						$form = 'P';
+						break;
+					case 4:
+						$form = 'F';
+						break;
+				}
+			}
 
-		//add in random events (like not finished etc)
-		//set the horses as available
-		//remove the race and all entrants
+			//update horse's form
+			$horse = $entry->getHorse();
+			$latestForm = $horse->getForm() . $form;
+			if (strlen($latestForm) > 6) {
+				$latestForm = substr($latestForm, 1);
+			}
+			$horse->setForm($latestForm);
+
+			$this->em->persist($horse);
+			$this->em->flush();
+
+			$i++;
+		}
 
 		//save the race changes
-//		$this->em->persist($race);
-//		$this->em->flush();
+		$this->em->persist($race);
+		$this->em->flush();
 
 		return true;
 	}

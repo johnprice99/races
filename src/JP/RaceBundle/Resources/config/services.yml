@@ -3,6 +3,10 @@ services:
         class: JP\RaceBundle\Service\OddsCalculator
         arguments: [@doctrine.orm.entity_manager]
 
+    jp.race.generator:
+        class: JP\RaceBundle\Service\RaceGenerator
+        arguments: [@doctrine.orm.entity_manager, @jp.odds.calculator]
+
     jp.race.engine:
         class: JP\RaceBundle\Service\RaceEngine
         arguments: [@doctrine.orm.entity_manager]

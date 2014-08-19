@@ -5,72 +5,46 @@ namespace JP\RaceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JP\RaceBundle\Entity\Race;
-use JP\RaceBundle\Entity\Entry;
 
 class RaceController extends Controller {
 
 	/**
-	 * @Route("/race/generate")
-	 * @Template()
+	 * @Route("/race/generate", name="race_generate")
 	 */
 	public function generateAction() {
+		$this->get('jp.race.generator')->generate();
 
+		return $this->redirect($this->generateUrl('race_list'));
+	}
+
+	/**
+	 * @Route("/race/clear", name="race_clear")
+	 */
+	public function clearAction() {
 		$em = $this->getDoctrine()->getManager();
 
-		//create a race
-		$race = new Race();
+		//delete all races
+		$em->createQuery('DELETE JPRaceBundle:Race r')->execute();
 
-		//pick random horses
-		$result = $em->getConnection()->fetchAll('SELECT id FROM `horse` WHERE `available` = 1 ORDER BY rand() LIMIT ' . $race->getRunnerCount());
-		$horsesInRace = array();
-		foreach ($result as $id) { $horsesInRace[] = $id['id']; }
+		//find all horses and set their availability to 1
+		$em->createQuery('UPDATE JPRaceBundle:Horse h SET h.available = 1')->execute();
 
-		$repository = $this->getDoctrine()->getRepository('JPRaceBundle:Horse');
-		$query = $repository->createQueryBuilder('h')
-			->where('h.id IN (:ids)')
-			->setParameter('ids', $horsesInRace)
-			->getQuery();
+		//find all jockeys and set their availability to 1
+		$em->createQuery('UPDATE JPRaceBundle:Jockey j SET j.available = 1')->execute();
+		return $this->redirect($this->generateUrl('race_list'));
+	}
 
-		$runners = $query->getResult();
-		shuffle($runners);
+	/**
+	 * @Route("/race/list", name="race_list")
+	 * @Template()
+	 */
+	public function listAction() {
+		//get the races
+		$races = $this->getDoctrine()->getRepository('JPRaceBundle:Race')->findAll();
 
-		foreach ($runners as $runner) {
-			//set the horse as no longer available
-			$runner->setAvailable(false);
-
-			//create the entry
-			$entry = new Entry();
-			$entry->setHorse($runner);
-
-			//pick a jockey
-			$jockeyRepo = $this->getDoctrine()->getRepository('JPRaceBundle:Jockey');
-			$count = $jockeyRepo->createQueryBuilder('j')->select('COUNT(j)')->where('j.available = 1')->getQuery()->getSingleScalarResult();
-			$jockey = $jockeyRepo->createQueryBuilder('j')->where('j.available = 1')
-				->setFirstResult(rand(0, $count - 1))
-				->setMaxResults(1)
-				->getQuery()->getSingleResult();
-			$entry->setJockey($jockey);
-
-			//set the jockey as no longer available
-			$jockey->setAvailable(false);
-			$em->persist($jockey);
-			$em->flush();
-
-			//add the entry to the race
-			$race->addEntry($entry);
-		}
-
-		//calculate the odds
-		$this->get('jp.odds.calculator')->calculate($race);
-
-		//save the race
-		$em->persist($race);
-		$em->flush();
-
-		die('race created: ' . $race->getId());
-
-		return array();
+		return array(
+			'races' => $races
+		);
 	}
 
 	/**
@@ -89,22 +63,13 @@ class RaceController extends Controller {
 	}
 
 	/**
-	 * @Route("/race/winner/{id}", name="race_winner")
-	 * @Template()
+	 * @Route("/race/run", name="race_run")
 	 */
-	public function winnerAction($id) {
-		//get the race
-		$repository = $this->getDoctrine()->getRepository('JPRaceBundle:Race');
-		$race = $repository->createQueryBuilder('r')->where('r.id = :id')->setParameter('id', $id)->setMaxResults(1)->getQuery()->getSingleResult();
-
-		$this->get('jp.race.engine')->run($race);
-
-		echo 'winner done';
-		die();
-
-		//pass the race to the view to render the race card
-		return array(
-			'race' => $race
-		);
+	public function runAction() {
+		$races = $this->getDoctrine()->getRepository('JPRaceBundle:Race')->findAll();
+		foreach ($races as $race) {
+			$this->get('jp.race.engine')->run($race);
+		}
+		return $this->redirect($this->generateUrl('race_list'));
 	}
 }

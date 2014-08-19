@@ -3,29 +3,31 @@
 {% block title %}View Race | {{ siteName }}{% endblock %}
 
 {% block body %}
-	<table>
+	<table cellpadding="10" cellspacing="5">
 		<tr>
-			<th>Number</th>
-			<th>Colours</th>
-			<th>Form</th>
-			<th>Name</th>
-			<th>Age</th>
-			<th>Weight</th>
-			<th>Trainer</th>
-			<th>Jockey</th>
-			<th>Odds</th>
+			<th align="left">Number</th>
+			{#<th align="left">Colours</th>#}
+			<th align="left">Form</th>
+			<th align="left">Name</th>
+			<th align="left">Age</th>
+			<th align="left">Weight</th>
+			<th align="left">Trainer</th>
+			<th align="left">Jockey</th>
+			<th align="left">Odds</th>
+			{#<th>&nbsp;</th>#}
 		</tr>
 		{% for entry in race.entries %}
 			<tr>
 				<td>{{ loop.index }}</td>
-				<td><img src="" alt="" width="20" height="20" /></td>
+				{#<td><img src="" alt="" width="20" height="20" /></td>#}
 				<td>{{ entry.horse.form }}</td>
 				<td>{{ entry.horse.name }}</td>
 				<td>{{ entry.horse.age }}</td>
 				<td>{{ entry.jockey.weight }}</td>
-				<td>{{ entry.horse.trainer.name }} ({{ entry.horse.trainer.level }})</td>
-				<td>{{ entry.jockey.name }} ({{ entry.jockey.level }})</td>
-				<td>{{ entry.odds }}</td>
+				<td>{{ entry.horse.trainer.name }}</td>
+				<td>{{ entry.jockey.name }}</td>
+				<td>{{ entry.odds }} ({{ entry.probability }})</td>
+				{#<td><a href="#">Place Bet</a></td>#}
 			</tr>
 		{% endfor %}
 	</table>

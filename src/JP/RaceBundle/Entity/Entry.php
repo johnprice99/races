@@ -19,7 +19,7 @@ class Entry {
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Race", inversedBy="entries")
-	 * @ORM\JoinColumn(name="race_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="race_id", referencedColumnName="id", onDelete="CASCADE")
 	 */
 	protected $race;
 
@@ -37,6 +37,16 @@ class Entry {
 	 * @ORM\Column(type="string", length=6)
 	 */
 	protected $odds;
+
+	/**
+	 * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
+	 */
+	protected $probability;
+
+	/**
+	 * @ORM\Column(type="integer", nullable=true)
+	 */
+	protected $score;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -76,6 +86,22 @@ class Entry {
 
 	public function getOdds() {
 		return $this->odds;
+	}
+
+	public function setProbability($probability) {
+		$this->probability = $probability;
+	}
+
+	public function getProbability() {
+		return $this->probability;
+	}
+
+	public function setScore($score) {
+		$this->score = $score;
+	}
+
+	public function getScore() {
+		return $this->score;
 	}
 
 }

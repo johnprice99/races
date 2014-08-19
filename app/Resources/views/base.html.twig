@@ -24,6 +24,11 @@
 				<a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
 			{% endif %}
 
+			<p><a href="{{ path('race_generate') }}">Generate A Race</a></p>
+			<p><a href="{{ path('race_list') }}">All Races</a></p>
+			<p><a href="{{ path('race_run') }}">Run Races</a></p>
+			<p><a href="{{ path('race_clear') }}">Clear Races</a></p>
+
 			{% if app.user is not null %}
 				&curren;{{ app.user.balance|number_format }}
 			{% endif %}

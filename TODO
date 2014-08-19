@@ -1,11 +1,11 @@
 -- NEW FEATURES --
 
-* Create a race object
-	- Simple race engine to find winner (for now the algorithm will be, RAND(), then work on Dice rolls, - eventually work from odds / distance / horse stats / jockey etc)
+- give horses behavior (5-9) - take this value from 10 and we get how likely that horse will refuse to race
+- Generate odds based on last race
+
 * allow user to bet money
 * when race complete, pay any necessary winnings to the winners (cron? button?)
-* store race results from horses
-	- Generate odds based on last race
+
 
 * races have distance - horses with longer stamina would be better
 * horses of 2 years only race other 2 year old horses (and only short distances)
@@ -14,6 +14,7 @@
 
 -- NOTES --
 
+http://en.wikipedia.org/wiki/Racecard
 http://www.horse-smart.com/definitions.htm
 http://en.wikipedia.org/wiki/Form_(horse_racing)
 http://en.wikipedia.org/wiki/Horseracing_in_Great_Britain

@@ -49,12 +49,12 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			$trainer = new Trainer();
 
 			//Generate a random name
-			$firstInitial = chr(rand(ord('A'), ord('Z')));
+			$firstInitial = chr(mt_rand(ord('A'), ord('Z')));
 			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
 			$trainer->setName($firstInitial . '. ' . $name['value']);
-			$trainer->setLevel(rand(50, 95));
+			$trainer->setLevel(mt_rand(50, 95));
 
-			$horsesInStable = rand(1, 3);
+			$horsesInStable = mt_rand(1, 3);
 			for ($h = 1; $h <= $horsesInStable; $h++) {
 				$horse = new Horse();
 
@@ -62,13 +62,13 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 				//now remove the name so that it doesn't get picked again
 				$db->delete('horse_names', array('id' => $row['id']));
 				$horse->setName($row['value']);
-				$sex = (rand(1, 2) == 2) ? 'm' : 'f';
+				$sex = (mt_rand(1, 2) == 2) ? 'm' : 'f';
 				$horse->setSex($sex);
-				$horse->setAge(rand(3, 11));
+				$horse->setAge(mt_rand(3, 11));
 				$horse->setAvailable(true);
-				$typePref = (rand(1, 2) == 2) ? 'flat' : 'jump';
+				$typePref = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
 				$horse->setPreferredType($typePref);
-				$horse->setStamina(rand(50, 95));
+				$horse->setStamina(mt_rand(50, 95));
 
 				$trainer->addHorse($horse);
 			}
@@ -82,13 +82,13 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			$jockey = new Jockey();
 
 			//Generate a random name
-			$firstInitial = chr(rand(ord('A'), ord('Z')));
+			$firstInitial = chr(mt_rand(ord('A'), ord('Z')));
 			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
 			$jockey->setName($firstInitial . '. ' . $name['value']);
 
-			$weight = rand(8, 12) . '.' . rand(0, 14);
+			$weight = mt_rand(8, 12) . '.' . mt_rand(0, 14);
 			$jockey->setWeight($weight);
-			$jockey->setLevel(rand(50, 95));
+			$jockey->setLevel(mt_rand(50, 95));
 			$jockey->setAvailable(true);
 
 			$manager->persist($jockey);

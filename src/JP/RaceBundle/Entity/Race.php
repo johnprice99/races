@@ -34,9 +34,9 @@ class Race {
 	private $type;
 
 	public function __construct() {
-		$this->runnerCount = rand(5, 15);
+		$this->runnerCount = mt_rand(5, 15);
 		$this->entries = new ArrayCollection();
-		$this->type = (rand(1, 2) == 2) ? 'flat' : 'jump';
+		$this->type = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
 	}
 
 	public function setId($id) {

@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Races{% endblock %}
+
+{% block body %}
+	{% for race in races %}
+		<div>
+			<p><a href="{{ path('race_view', {'id' : race.id}) }}">Race ({{ race.type }})</a></p>
+		</div>
+	{% endfor %}
+{% endblock %}

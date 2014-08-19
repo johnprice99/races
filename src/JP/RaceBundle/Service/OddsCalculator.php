@@ -91,6 +91,7 @@ class OddsCalculator {
 			if ($probability <= 0) {
 				$probability = 2;
 			}
+			$entry->setProbability($probability);
 
 			$odds = (100 - $probability) / $probability;
 			if ($probability > 50) {
@@ -98,8 +99,6 @@ class OddsCalculator {
 			}
 			$odds = number_format($odds);
 			$entry->setOdds($odds.'-1');
-//			$odds = number_format($probability);
-//			$entry->setOdds($odds);
 		}
 
 		//save the race changes
