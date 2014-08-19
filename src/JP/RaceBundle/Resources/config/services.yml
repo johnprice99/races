@@ -1,0 +1,8 @@
+services:
+    jp.odds.calculator:
+        class: JP\RaceBundle\Service\OddsCalculator
+        arguments: [@doctrine.orm.entity_manager]
+
+    jp.race.engine:
+        class: JP\RaceBundle\Service\RaceEngine
+        arguments: [@doctrine.orm.entity_manager]

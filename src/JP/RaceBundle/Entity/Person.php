@@ -21,6 +21,11 @@ class Person {
 	 */
 	protected $name;
 
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	protected $level;
+
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -35,6 +40,14 @@ class Person {
 
 	public function getName() {
 		return $this->name;
+	}
+
+	public function setLevel($level) {
+		$this->level = $level;
+	}
+
+	public function getLevel() {
+		return $this->level;
 	}
 
 }

@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use JP\RaceBundle\Entity\Owner;
+use JP\RaceBundle\Entity\Trainer;
 use JP\RaceBundle\Entity\Jockey;
 use JP\RaceBundle\Entity\Horse;
 
@@ -44,14 +44,15 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			$db->insert('horse_names', array('value' => trim(fgets($handle))));
 		}
 
-		echo "Creating Owners...\n\n";
+		echo "Creating Trainers...\n\n";
 		for ($i = 1; $i <= 30; $i++) {
-			$owner = new Owner();
+			$trainer = new Trainer();
 
 			//Generate a random name
 			$firstInitial = chr(rand(ord('A'), ord('Z')));
 			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
-			$owner->setName($firstInitial . ' ' . $name['value']);
+			$trainer->setName($firstInitial . '. ' . $name['value']);
+			$trainer->setLevel(rand(50, 95));
 
 			$horsesInStable = rand(1, 3);
 			for ($h = 1; $h <= $horsesInStable; $h++) {
@@ -61,10 +62,18 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 				//now remove the name so that it doesn't get picked again
 				$db->delete('horse_names', array('id' => $row['id']));
 				$horse->setName($row['value']);
-				$owner->addHorse($horse);
+				$sex = (rand(1, 2) == 2) ? 'm' : 'f';
+				$horse->setSex($sex);
+				$horse->setAge(rand(3, 11));
+				$horse->setAvailable(true);
+				$typePref = (rand(1, 2) == 2) ? 'flat' : 'jump';
+				$horse->setPreferredType($typePref);
+				$horse->setStamina(rand(50, 95));
+
+				$trainer->addHorse($horse);
 			}
 
-			$manager->persist($owner);
+			$manager->persist($trainer);
 			$manager->flush();
 		}
 
@@ -75,7 +84,12 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			//Generate a random name
 			$firstInitial = chr(rand(ord('A'), ord('Z')));
 			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
-			$jockey->setName($firstInitial . ' ' . $name['value']);
+			$jockey->setName($firstInitial . '. ' . $name['value']);
+
+			$weight = rand(8, 12) . '.' . rand(0, 14);
+			$jockey->setWeight($weight);
+			$jockey->setLevel(rand(50, 95));
+			$jockey->setAvailable(true);
 
 			$manager->persist($jockey);
 			$manager->flush();

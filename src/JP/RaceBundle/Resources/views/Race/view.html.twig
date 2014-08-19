@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}View Race | {{ siteName }}{% endblock %}
+
+{% block body %}
+	<table>
+		<tr>
+			<th>Number</th>
+			<th>Colours</th>
+			<th>Form</th>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Weight</th>
+			<th>Trainer</th>
+			<th>Jockey</th>
+			<th>Odds</th>
+		</tr>
+		{% for entry in race.entries %}
+			<tr>
+				<td>{{ loop.index }}</td>
+				<td><img src="" alt="" width="20" height="20" /></td>
+				<td>{{ entry.horse.form }}</td>
+				<td>{{ entry.horse.name }}</td>
+				<td>{{ entry.horse.age }}</td>
+				<td>{{ entry.jockey.weight }}</td>
+				<td>{{ entry.horse.trainer.name }} ({{ entry.horse.trainer.level }})</td>
+				<td>{{ entry.jockey.name }} ({{ entry.jockey.level }})</td>
+				<td>{{ entry.odds }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

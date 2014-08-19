@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="owner")
+ * @ORM\Table(name="trainer")
  */
-class Owner extends Person {
+class Trainer extends Person {
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Horse", mappedBy="category", cascade={"persist"})
@@ -29,7 +29,7 @@ class Owner extends Person {
 	}
 
 	public function addHorse($horse) {
-		$horse->setOwner($this);
+		$horse->setTrainer($this);
 		$this->stable->add($horse);
 	}
 

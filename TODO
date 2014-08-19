@@ -1,14 +1,23 @@
 -- NEW FEATURES --
 
 * Create a race object
-	- 6 entrants (random)
-	- Generate odds
-	- Simple race engine to find winner
-* show race on webpage
+	- Simple race engine to find winner (for now the algorithm will be, RAND(), then work on Dice rolls, - eventually work from odds / distance / horse stats / jockey etc)
 * allow user to bet money
 * when race complete, pay any necessary winnings to the winners (cron? button?)
-* create pages to see owners and their stables (each horses last 5 race results)
 * store race results from horses
+	- Generate odds based on last race
+
+* races have distance - horses with longer stamina would be better
+* horses of 2 years only race other 2 year old horses (and only short distances)
+* races will have maximum weight limits
+* races should have an age limit
+
+-- NOTES --
+
+http://www.horse-smart.com/definitions.htm
+http://en.wikipedia.org/wiki/Form_(horse_racing)
+http://en.wikipedia.org/wiki/Horseracing_in_Great_Britain
+http://www.horseracingmoments.com/2007/how-old-are-most-race-horses-when-do-they-usually-retire/
 
 -- BUGS --
 
