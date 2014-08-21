@@ -29,7 +29,7 @@ class Horse {
 	protected $trainer;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="smallint", options={"unsigned":true})
 	 */
 	protected $age;
 
@@ -54,9 +54,19 @@ class Horse {
 	protected $preferredType;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
 	 */
 	protected $stamina;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
+	 */
+	protected $behaviour;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
+	 */
+	protected $level;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -128,6 +138,42 @@ class Horse {
 
 	public function getStamina() {
 		return $this->stamina;
+	}
+
+	public function setBehaviour($behaviour) {
+		$this->behaviour = $behaviour;
+	}
+
+	public function getBehaviour() {
+		return $this->behaviour;
+	}
+
+	public function setLevel($level) {
+		$this->level = $level;
+	}
+
+	public function getLevel() {
+		return $this->level;
+	}
+
+	public function generateLevel() {
+		//horses level generated from stamina, behaviour and age
+		//100 stamina + 9 behaviour + 6/7 = 100  class 1 - levels 7, 8, 9 class 2 - level 4, 5, 6, 7, class 5 - level 1, 2, 3
+		$level = 100;
+		$level -= 100 - (10 * $this->getBehaviour());
+		$level -= round($this->getStamina(), -1) / 10;
+		switch ($this->getAge()) {
+			case 7:
+			case 8:
+				$level += 5; //best age
+				break;
+			case 6:
+			case 9:
+				$level += 5; // maturing / declining
+				break;
+		}
+
+		return $this->setLevel(round($level, -1) / 10);
 	}
 
 }

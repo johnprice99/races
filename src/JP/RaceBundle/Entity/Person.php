@@ -22,7 +22,7 @@ class Person {
 	protected $name;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
 	 */
 	protected $level;
 

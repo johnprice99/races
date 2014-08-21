@@ -24,7 +24,12 @@ class Race {
 	protected $entries;
 
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
+	 */
+	private $class;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
 	 */
 	private $runnerCount;
 
@@ -33,10 +38,31 @@ class Race {
 	 */
 	private $type;
 
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
+	 */
+	private $minAge;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true})
+	 */
+	private $distance;
+
 	public function __construct() {
 		$this->runnerCount = mt_rand(5, 15);
+		$this->setClass(mt_rand(1, 3));
 		$this->entries = new ArrayCollection();
 		$this->type = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
+		$this->minAge = mt_rand(3, 5);
+
+		if ($this->type == 'flat') {
+			//if flat
+			$this->distance = mt_rand(1100, 3899);
+		}
+		else {
+			//if jump
+			$this->distance = mt_rand(3520, 7920);
+		}
 	}
 
 	public function setId($id) {
@@ -60,6 +86,14 @@ class Race {
 		$this->entries->add($entry);
 	}
 
+	public function setClass($class) {
+		$this->class = $class;
+	}
+
+	public function getClass() {
+		return $this->class;
+	}
+
 	public function getRunnerCount() {
 		return $this->runnerCount;
 	}
@@ -70,6 +104,22 @@ class Race {
 
 	public function getType() {
 		return $this->type;
+	}
+
+	public function setMinAge($minAge) {
+		$this->minAge = $minAge;
+	}
+
+	public function getMinAge() {
+		return $this->minAge;
+	}
+
+	public function setDistance($distance) {
+		$this->distance = $distance;
+	}
+
+	public function getDistance() {
+		return $this->distance;
 	}
 
 }

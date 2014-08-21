@@ -39,14 +39,19 @@ class Entry {
 	protected $odds;
 
 	/**
-	 * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
-	 */
-	protected $probability;
-
-	/**
-	 * @ORM\Column(type="integer", nullable=true)
+	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
 	 */
 	protected $score;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
+	 */
+	protected $result;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
+	 */
+	protected $finalPosition;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -88,20 +93,28 @@ class Entry {
 		return $this->odds;
 	}
 
-	public function setProbability($probability) {
-		$this->probability = $probability;
-	}
-
-	public function getProbability() {
-		return $this->probability;
-	}
-
 	public function setScore($score) {
 		$this->score = $score;
 	}
 
 	public function getScore() {
 		return $this->score;
+	}
+
+	public function setResult($result) {
+		$this->result = $result;
+	}
+
+	public function getResult() {
+		return $this->result;
+	}
+
+	public function setFinalPosition($finalPosition) {
+		$this->finalPosition = $finalPosition;
+	}
+
+	public function getFinalPosition() {
+		return $this->finalPosition;
 	}
 
 }

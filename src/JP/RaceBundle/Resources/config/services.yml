@@ -10,3 +10,8 @@ services:
     jp.race.engine:
         class: JP\RaceBundle\Service\RaceEngine
         arguments: [@doctrine.orm.entity_manager]
+
+    jp.twig.distance_extension:
+        class: JP\RaceBundle\Twig\DistanceExtension
+        tags:
+            - { name: twig.extension }

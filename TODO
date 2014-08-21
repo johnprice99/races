@@ -1,24 +1,44 @@
 -- NEW FEATURES --
 
-- give horses behavior (5-9) - take this value from 10 and we get how likely that horse will refuse to race
-- Generate odds based on last race
+- improve race generation
+	- pick horses based on class of race
+	- pick jockeys with a better weight for the type of race
 
+* Maiden races?
+
+* make all hard coded numbers a parameter that can be changed??
+* add double the amount of owners and jockeys - should always be able to find horses for a race
+
+===== ONCE RACE ENGINE COMPLETE =====
+
+* need to see the results of races (i.e. when running results of races) - show order of horses etc
 * allow user to bet money
 * when race complete, pay any necessary winnings to the winners (cron? button?)
 
 
-* races have distance - horses with longer stamina would be better
-* horses of 2 years only race other 2 year old horses (and only short distances)
-* races will have maximum weight limits
-* races should have an age limit
-
 -- NOTES --
+
 
 http://en.wikipedia.org/wiki/Racecard
 http://www.horse-smart.com/definitions.htm
 http://en.wikipedia.org/wiki/Form_(horse_racing)
 http://en.wikipedia.org/wiki/Horseracing_in_Great_Britain
 http://www.horseracingmoments.com/2007/how-old-are-most-race-horses-when-do-they-usually-retire/
+http://www.flatstats.co.uk/horse-race-information.html
+http://www.laurelpark.com/what-furlong-and-please-explain-distances
+http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase/
+
 
 -- BUGS --
 
+
+* look at database calls when generating a race
+* look at inconsistencies for doctrine mappings when generating a race
+
+
+-- FUTURE CHANGES --
+
+
+* make races hidden by default (private, until set to public - in case generation fails or something)
+* horses of 2 years only race other 2 year old horses (and only short distances)
+	- need to generate 2 year old horses now too?

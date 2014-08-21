@@ -45,7 +45,7 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 		}
 
 		echo "Creating Trainers...\n\n";
-		for ($i = 1; $i <= 30; $i++) {
+		for ($i = 1; $i <= 80; $i++) {
 			$trainer = new Trainer();
 
 			//Generate a random name
@@ -54,7 +54,7 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			$trainer->setName($firstInitial . '. ' . $name['value']);
 			$trainer->setLevel(mt_rand(50, 95));
 
-			$horsesInStable = mt_rand(1, 3);
+			$horsesInStable = mt_rand(1, 5);
 			for ($h = 1; $h <= $horsesInStable; $h++) {
 				$horse = new Horse();
 
@@ -68,7 +68,9 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 				$horse->setAvailable(true);
 				$typePref = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
 				$horse->setPreferredType($typePref);
-				$horse->setStamina(mt_rand(50, 95));
+				$horse->setStamina(mt_rand(50, 100));
+				$horse->setBehaviour(mt_rand(6, 9));
+				$horse->generateLevel();
 
 				$trainer->addHorse($horse);
 			}
@@ -78,7 +80,7 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 		}
 
 		echo "Creating Jockeys...\n\n";
-		for ($i = 1; $i <= 60; $i++) {
+		for ($i = 1; $i <= 500; $i++) {
 			$jockey = new Jockey();
 
 			//Generate a random name
