@@ -100,6 +100,14 @@ class RaceEngine {
 
 			//update horse's form
 			$horse = $entry->getHorse();
+			if ($i === 1) {
+				if ($race->getType() == 'flat') {
+					$horse->setFlatMaiden(false);
+				}
+				elseif ($race->getType() == 'jump') {
+					$horse->setJumpMaiden(false);
+				}
+			}
 			$latestForm = $horse->getForm() . $form;
 			if (strlen($latestForm) > 6) {
 				$latestForm = substr($latestForm, 1);

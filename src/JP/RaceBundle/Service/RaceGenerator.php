@@ -24,7 +24,7 @@ class RaceGenerator {
 		//class 1 - levels 7, 8, 9 class 2 - level 4, 5, 6, 7, class 5 - level 1, 2, 3
 		switch($race->getClass()) {
 			case 1:
-				$levels = array(7,8,9);
+				$levels = array(8,9,10);
 				break;
 			case 2:
 				$levels = array(4,5,6,7);
@@ -34,6 +34,15 @@ class RaceGenerator {
 				break;
 		}
 
+		$raceType = $race->getType();
+		$extraSQL = '';
+		if ($raceType == 'flat' && $race->getMaiden()) {
+			$extraSQL = ' AND flatMaiden = 1 ';
+		}
+		elseif ($raceType == 'jump' && $race->getMaiden()) {
+			$extraSQL = ' AND jumpMaiden = 1 ';
+		}
+
 		//get the IDs of horses that match the criteria of the race
 		$sql = 'SELECT x.* FROM (
 			(
@@ -41,7 +50,7 @@ class RaceGenerator {
 				WHERE `available` = 1
 				AND `age` >= :age
 				AND preferredType = :type
-				AND level IN ('.implode(',', $levels).')
+				AND level IN ('.implode(',', $levels).')'.$extraSQL.'
 				ORDER BY RAND() LIMIT '.$race->getRunnerCount().'
 			)
 			UNION
@@ -49,19 +58,18 @@ class RaceGenerator {
 				SELECT id FROM `horse`
 				WHERE `available` = 1
 				AND `age` >= :age
-				AND level IN ('.implode(',', $levels).')
+				AND level IN ('.implode(',', $levels).')'.$extraSQL.'
 				ORDER BY RAND() LIMIT '.$race->getRunnerCount().')
 				LIMIT '.$race->getRunnerCount().'
 			) x ORDER BY RAND()';
 		$result = $this->em->getConnection()->fetchAll($sql, array(
 			'age' => $race->getMinAge(),
-			'type' => $race->getType()
+			'type' => $raceType
 		));
-
 		$horsesInRace = array();
 		foreach ($result as $id) { $horsesInRace[] = $id['id']; }
 
-		if (empty($horsesInRace)) {
+		if (empty($horsesInRace) || count($horsesInRace) < $race->getRunnerCount()) {
 			die('not enough horses to fill the race');
 		}
 

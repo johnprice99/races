@@ -48,12 +48,18 @@ class Race {
 	 */
 	private $distance;
 
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $maiden;
+
 	public function __construct() {
 		$this->runnerCount = mt_rand(5, 15);
 		$this->setClass(mt_rand(1, 3));
 		$this->entries = new ArrayCollection();
 		$this->type = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
 		$this->minAge = mt_rand(3, 5);
+		$this->maiden = mt_rand(0, 1);
 
 		if ($this->type == 'flat') {
 			//if flat
@@ -122,4 +128,11 @@ class Race {
 		return $this->distance;
 	}
 
+	public function setMaiden($maiden) {
+		$this->maiden = $maiden;
+	}
+
+	public function getMaiden() {
+		return $this->maiden;
+	}
 }

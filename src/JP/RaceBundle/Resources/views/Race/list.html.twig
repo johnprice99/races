@@ -5,7 +5,7 @@
 {% block body %}
 	{% for race in races %}
 		<div>
-			<p><a href="{{ path('race_view', {'id' : race.id}) }}">{{ race.type|capitalize }}, Class {{ race.class }}, {{ race.minAge }}yo+, {{ race.distance|raceDistance }}, {{ race.runnerCount }} runners</a></p>
+			<p><a href="{{ path('race_view', {'id' : race.id}) }}">{% include('JPRaceBundle:Race:title.html.twig') %}</a></p>
 		</div>
 	{% endfor %}
 {% endblock %}

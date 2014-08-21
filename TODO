@@ -1,20 +1,23 @@
 -- NEW FEATURES --
 
 - improve race generation
-	- pick horses based on class of race
 	- pick jockeys with a better weight for the type of race
 
-* Maiden races?
+- add form to select runners and class for a race instead of just generate button
 
 * make all hard coded numbers a parameter that can be changed??
-* add double the amount of owners and jockeys - should always be able to find horses for a race
 
 ===== ONCE RACE ENGINE COMPLETE =====
 
 * need to see the results of races (i.e. when running results of races) - show order of horses etc
+* Get a list of jockeys
+* Get a list of trainers
+	- each trainer has a list of horses
+
 * allow user to bet money
 * when race complete, pay any necessary winnings to the winners (cron? button?)
 
+* Generate new horses when necessary (form to pick how many)
 
 -- NOTES --
 

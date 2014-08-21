@@ -159,7 +159,7 @@ class OddsCalculator {
 			$percentage = number_format(($entry->getScore() / $totalScore) * 100);
 
 			//finally work out the odds based on that percentage
-			$odds = array($entryScore / (100 - $percentage), 1);
+			$odds = array($entry->getScore() / (100 - $percentage), 1);
 			if ($percentage <= 50) {
 				$odds[0] = 1 / $odds[0];
 			}

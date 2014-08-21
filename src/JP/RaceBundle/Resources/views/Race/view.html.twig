@@ -3,7 +3,7 @@
 {% block title %}View Race{% endblock %}
 
 {% block body %}
-	<p>{{ race.type|capitalize }}, Class {{ race.class }}, {{ race.minAge }}yo+, {{ race.distance|raceDistance }}, {{ race.runnerCount }} runners</p>
+	<p>{% include('JPRaceBundle:Race:title.html.twig') %}</p>
 
 	<table cellpadding="10" cellspacing="5">
 		<tr>
@@ -25,14 +25,14 @@
 				<td>{{ loop.index }}</td>
 				{#<td><img src="" alt="" width="20" height="20" /></td>#}
 				<td>{{ entry.horse.form }}</td>
-				<td>{{ entry.horse.name }} ({{ entry.horse.level }})</td>
+				<td>{{ entry.horse.name }}</td>
 				<td>{{ entry.horse.behaviour }}</td>
 				<td>{{ entry.horse.stamina }}</td>
 				<td>{{ entry.horse.age }}</td>
 				<td>{{ entry.jockey.weight }}</td>
 				<td>{{ entry.horse.trainer.name }}</td>
 				<td>{{ entry.jockey.name }}</td>
-				<td>{{ entry.odds }} ({{ entry.score }})</td>
+				<td>{{ entry.odds }}</td>
 				{#<td><a href="#">Place Bet</a></td>#}
 			</tr>
 		{% endfor %}

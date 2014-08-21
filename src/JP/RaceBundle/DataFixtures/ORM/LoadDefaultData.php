@@ -45,7 +45,7 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 		}
 
 		echo "Creating Trainers...\n\n";
-		for ($i = 1; $i <= 80; $i++) {
+		for ($i = 1; $i <= 200; $i++) {
 			$trainer = new Trainer();
 
 			//Generate a random name

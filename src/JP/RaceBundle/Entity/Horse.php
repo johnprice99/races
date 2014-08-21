@@ -68,6 +68,16 @@ class Horse {
 	 */
 	protected $level;
 
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $flatMaiden = 1;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $jumpMaiden = 1;
+
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -158,22 +168,49 @@ class Horse {
 
 	public function generateLevel() {
 		//horses level generated from stamina, behaviour and age
-		//100 stamina + 9 behaviour + 6/7 = 100  class 1 - levels 7, 8, 9 class 2 - level 4, 5, 6, 7, class 5 - level 1, 2, 3
-		$level = 100;
-		$level -= 100 - (10 * $this->getBehaviour());
-		$level -= round($this->getStamina(), -1) / 10;
-		switch ($this->getAge()) {
-			case 7:
-			case 8:
-				$level += 5; //best age
-				break;
-			case 6:
-			case 9:
-				$level += 5; // maturing / declining
-				break;
+		//class 1 - levels 7, 8, 9 class 2 - level 4, 5, 6, 7, class 5 - level 1, 2, 3
+		$level = 11;
+		$level -= 10 - $this->behaviour;
+		$level -= 10 - round($this->stamina, -1) / 10;
+
+		if ($this->age < 7) {
+			$level -= 7 - $this->age;
+		}
+		elseif ($this->age <= 8) {
+			$level += 2;
+		}
+		elseif ($this->age == 10) {
+			$level--;
+		}
+		elseif ($this->age > 10) {
+			$level -= $this->age - 10;
 		}
 
-		return $this->setLevel(round($level, -1) / 10);
+		//sanity check
+		if ($level > 10) {
+			$level = 10;
+		}
+		elseif ($level < 1) {
+			$level = 1;
+		}
+
+		return $this->setLevel($level);
+	}
+
+	public function setFlatMaiden($flatMaiden) {
+		$this->flatMaiden = $flatMaiden;
+	}
+
+	public function getFlatMaiden() {
+		return $this->flatMaiden;
+	}
+
+	public function setJumpMaiden($jumpMaiden) {
+		$this->jumpMaiden = $jumpMaiden;
+	}
+
+	public function getJumpMaiden() {
+		return $this->jumpMaiden;
 	}
 
 }
