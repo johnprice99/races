@@ -5,16 +5,27 @@ namespace JP\RaceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
+use JP\RaceBundle\Form\Type\GenerateRaceType;
 
 class RaceController extends Controller {
 
 	/**
 	 * @Route("/race/generate", name="race_generate")
+	 * @Template()
 	 */
-	public function generateAction() {
-		$this->get('jp.race.generator')->generate();
+	public function generateAction(Request $request) {
+		$form = $this->createForm(new GenerateRaceType());
+		$form->handleRequest($request);
 
-		return $this->redirect($this->generateUrl('race_list'));
+		if ($form->isValid()) {
+			$this->get('jp.race.generator')->generate($form->getData());
+			return $this->redirect($this->generateUrl('race_list'));
+		}
+
+		return array(
+			'form' => $form->createView(),
+		);
 	}
 
 	/**
@@ -31,6 +42,7 @@ class RaceController extends Controller {
 
 		//find all jockeys and set their availability to 1
 		$em->createQuery('UPDATE JPRaceBundle:Jockey j SET j.available = 1')->execute();
+
 		return $this->redirect($this->generateUrl('race_list'));
 	}
 
@@ -56,6 +68,9 @@ class RaceController extends Controller {
 		$repository = $this->getDoctrine()->getRepository('JPRaceBundle:Race');
 		$race = $repository->createQueryBuilder('r')->where('r.id = :id')->setParameter('id', $id)->setMaxResults(1)->getQuery()->getSingleResult();
 
+
+		$this->get('jp.odds.calculator')->calculate($race);
+
 		//pass the race to the view to render the race card
 		return array(
 			'race' => $race
@@ -70,6 +85,7 @@ class RaceController extends Controller {
 		foreach ($races as $race) {
 			$this->get('jp.race.engine')->run($race);
 		}
+
 		return $this->redirect($this->generateUrl('race_list'));
 	}
 }

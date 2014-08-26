@@ -22,6 +22,11 @@ class JPRaceExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+		$container->setParameter('jp_race.config', array(
+			'horse' => $config['horse'],
+			'race' => $config['race'],
+		));
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

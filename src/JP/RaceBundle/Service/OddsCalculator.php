@@ -9,8 +9,11 @@ class OddsCalculator {
 
 	private $em;
 
-	public function __construct(EntityManager $entityManager) {
+	private $parameters;
+
+	public function __construct(EntityManager $entityManager, $parameters = array()) {
 		$this->em = $entityManager;
+		$this->parameters = $parameters;
 	}
 
 	public function greatestCommonDivisor($a, $b) {
@@ -44,6 +47,12 @@ class OddsCalculator {
 	public function calculate(Race $race) {
 		$defaultScore = number_format((1 / $race->getRunnerCount()) * 100);
 		$totalScore = 0; //used to work out percentages
+		$topScore = 0;
+
+		$raceType = $race->getType();
+		$raceDistance = $race->getDistance();
+
+		$configName = ($raceType === 'flat') ? 'flat' : 'jump';
 
 		foreach ($race->getEntries() as $entry) {
 			//each horse needs to have it's probability based on the default, then altered from age etc
@@ -51,30 +60,23 @@ class OddsCalculator {
 			$horse = $entry->getHorse();
 
 			//adjust $entryScore based on age
-			switch ($horse->getAge()) {
-				case 7:
-				case 8:
-					$entryScore += 10; //best age
-					break;
-				case 6:
-				case 9:
-					$entryScore += 5; // maturing / declining
-					break;
-				default:
-					$entryScore -= 5; // too young or too old
-					break;
+			if (in_array($horse->getAge(), $this->parameters['horse']['best_age'])) {
+				$entryScore += 10; //best age
+			}
+			elseif (in_array($horse->getAge(), $this->parameters['horse']['ok_age'])) {
+				$entryScore += 5;  // maturing / declining
+			}
+			else {
+				$entryScore -= 5; // too young or too old
 			}
 
 			//adjust based on horse preferred type (flat/jump)
-			$raceType = $race->getType();
 			if ($horse->getPreferredType() === $raceType) {
 				$entryScore += 10;
 			}
 
-			$raceDistance = $race->getDistance();
-			if ($raceType == 'flat' && $raceDistance >= 3200 || $raceType == 'jump' && $raceDistance >= 6820) {
-				//if >75% of top distance for type of race (3200 or 6820)
-				//horses with 85+ stmina get boost
+			if ($raceDistance >= (0.75 * $this->parameters['race'][$configName]['max_distance'])) {
+				//if >75% of top distance for type of race - horses with 85+ stamina get boost
 				if ($horse->getStamina() >= 85) {
 					$entryScore += 5;
 				}
@@ -82,9 +84,8 @@ class OddsCalculator {
 					$entryScore -= 5;
 				}
 			}
-			elseif($raceType == 'flat' && $raceDistance >= 2500 || $raceType == 'jump' && $raceDistance >= 5720) {
-				//if >50% of top distance for type of race (2500 or 5720)
-				//horses with 65+ stmina get boost
+			elseif($raceDistance >= (0.5 * $this->parameters['race'][$configName]['max_distance'])) {
+				//if >50% of top distance for type of race - horses with 65+ stamina get boost
 				if ($horse->getStamina() >= 65) {
 					$entryScore += 5;
 				}
@@ -93,26 +94,11 @@ class OddsCalculator {
 				}
 			}
 
-			//adjust based on jockey weight
-			switch ($raceType) {
-				case 'flat':
-					//8 to <10
-					if ($entry->getJockey()->getNumericWeight() >= 8 && $entry->getJockey()->getNumericWeight() < 10) {
-						$entryScore += 10;
-					}
-					else {
-						$entryScore -= 10;
-					}
-					break;
-				case 'jump':
-					//9 to <11
-					if ($entry->getJockey()->getNumericWeight() >= 9 && $entry->getJockey()->getNumericWeight() < 11) {
-						$entryScore += 10;
-					}
-					else {
-						$entryScore -= 10;
-					}
-					break;
+			if ($entry->getJockey()->getNumericWeight() >= $this->parameters['race'][$configName]['ideal_weight']['min'] && $entry->getJockey()->getNumericWeight() < $this->parameters['race'][$configName]['ideal_weight']['max']) {
+				$entryScore += 10;
+			}
+			else {
+				$entryScore -= 10;
 			}
 
 			//adjust $entryScore based on jockey skill level
@@ -152,10 +138,22 @@ class OddsCalculator {
 
 			$totalScore += $entryScore;
 			$entry->setScore($entryScore);
+
+			//used to work out the favourite
+			if ($entryScore > $topScore) {
+				$topScore = $entryScore;
+			}
 		}
+
+		$favouritePicked = false;
 
 		//now work out the percentage for each entry
 		foreach ($race->getEntries() as $entry) {
+			if (!$favouritePicked && $entry->getScore() === $topScore) {
+				$entry->setFavourite(true);
+				$favouritePicked = true;
+			}
+
 			$percentage = number_format(($entry->getScore() / $totalScore) * 100);
 
 			//finally work out the odds based on that percentage

@@ -91,11 +91,9 @@ class RaceEngine {
 						$form = 'F';
 						break;
 				}
-//				$entry->setFinalPosition(0);
 			}
 			elseif ($entry->getResult() === -2) {
 				$form = 'R';
-//				$entry->setFinalPosition(0);
 			}
 
 			//update horse's form
@@ -104,7 +102,7 @@ class RaceEngine {
 				if ($race->getType() == 'flat') {
 					$horse->setFlatMaiden(false);
 				}
-				elseif ($race->getType() == 'jump') {
+				elseif ($race->getType() == 'fence' || $race->getType() == 'hurdle') {
 					$horse->setJumpMaiden(false);
 				}
 			}

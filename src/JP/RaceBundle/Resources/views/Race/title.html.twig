@@ -1,3 +1,2 @@
-JP.com
 {% if race.maiden %} Maiden {% endif %}
-{% if race.type == 'jump' %} Hurdle{% endif %} (Class {{ race.class }}, {{ race.minAge }}yo+, {{ race.distance|raceDistance }}, {{ race.runnerCount }} runners)
+{{ race.type|capitalize }} (Class {{ race.class }}, {{ race.minAge }}yo+, {{ race.distance|raceDistance }}, {{ race.runnerCount }} runners)

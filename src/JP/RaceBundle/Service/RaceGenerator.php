@@ -13,35 +13,36 @@ class RaceGenerator {
 
 	private $oddsCalculator;
 
-	public function __construct(EntityManager $entityManager, OddsCalculator $oddsCalculator) {
+	private $parameters;
+
+	public function __construct(EntityManager $entityManager, OddsCalculator $oddsCalculator, $parameters = array()) {
 		$this->em = $entityManager;
 		$this->oddsCalculator = $oddsCalculator;
+		$this->parameters = $parameters;
 	}
 
-	public function generate() {
+	public function generate($options) {
+		$runners = $options['runners'];
+		$raceType = $options['type'];
+		$raceClass = $options['class'];
+
+		$configName = ($raceType === 'flat') ? 'flat' : 'jump';
+
 		//create a race
 		$race = new Race();
-		//class 1 - levels 7, 8, 9 class 2 - level 4, 5, 6, 7, class 5 - level 1, 2, 3
-		switch($race->getClass()) {
-			case 1:
-				$levels = array(8,9,10);
-				break;
-			case 2:
-				$levels = array(4,5,6,7);
-				break;
-			case 3:
-				$levels = array(1,2,3);
-				break;
+		$race->setRunnerCount($runners);
+		$race->setType($raceType);
+		$race->setClass($raceClass);
+		$race->setMinAge(mt_rand(3, 5));
+		$race->setMaiden(mt_rand(0, 1));
+		$race->setDistance(mt_rand($this->parameters['race'][$configName]['min_distance'], $this->parameters['race'][$configName]['max_distance']));
+
+		$extraSQL = '';
+		if ($race->getMaiden()) {
+			$extraSQL = ' AND '.$configName.'Maiden = 1 ';
 		}
 
-		$raceType = $race->getType();
-		$extraSQL = '';
-		if ($raceType == 'flat' && $race->getMaiden()) {
-			$extraSQL = ' AND flatMaiden = 1 ';
-		}
-		elseif ($raceType == 'jump' && $race->getMaiden()) {
-			$extraSQL = ' AND jumpMaiden = 1 ';
-		}
+		$levels = $this->parameters['race']['class_levels'][$raceClass];
 
 		//get the IDs of horses that match the criteria of the race
 		$sql = 'SELECT x.* FROM (
@@ -59,9 +60,9 @@ class RaceGenerator {
 				WHERE `available` = 1
 				AND `age` >= :age
 				AND level IN ('.implode(',', $levels).')'.$extraSQL.'
-				ORDER BY RAND() LIMIT '.$race->getRunnerCount().')
-				LIMIT '.$race->getRunnerCount().'
-			) x ORDER BY RAND()';
+				ORDER BY RAND() LIMIT '.$race->getRunnerCount().'
+			) LIMIT '.$race->getRunnerCount().'
+		) x ORDER BY RAND()';
 		$result = $this->em->getConnection()->fetchAll($sql, array(
 			'age' => $race->getMinAge(),
 			'type' => $raceType
@@ -90,13 +91,32 @@ class RaceGenerator {
 			$entry = new Entry();
 			$entry->setHorse($runner);
 
-			//pick a jockey
-			$jockeyRepo = $this->em->getRepository('JPRaceBundle:Jockey');
-			$count = $jockeyRepo->createQueryBuilder('j')->select('COUNT(j)')->where('j.available = 1')->getQuery()->getSingleScalarResult();
-			$jockey = $jockeyRepo->createQueryBuilder('j')->where('j.available = 1')
-				->setFirstResult(mt_rand(0, $count - 1))
-				->setMaxResults(1)
-				->getQuery()->getSingleResult();
+			//pick a jockey that matches the type of race
+			$jockeySQL = 'SELECT x.* FROM (
+				(
+					SELECT `id` FROM `jockey`
+					WHERE `available` = 1
+					AND `weight` >= :minWeight AND `weight` < :maxWeight
+					ORDER BY RAND() LIMIT 1
+				)
+				UNION
+				(
+					SELECT `id` FROM `jockey`
+					WHERE `available` = 1 ORDER BY RAND() LIMIT 1
+				) LIMIT 1
+			) x ORDER BY RAND()';
+			$jockeyResult = $this->em->getConnection()->fetchAssoc($jockeySQL, array(
+				'minWeight' => $this->parameters['race'][$configName]['ideal_weight']['min'],
+				'maxWeight' => $this->parameters['race'][$configName]['ideal_weight']['max']
+			));
+
+			$repository = $this->em->getRepository('JPRaceBundle:Jockey');
+			$query = $repository->createQueryBuilder('j')
+				->where('j.id = :jockeyID')
+				->setParameter('jockeyID', $jockeyResult['id'])
+				->getQuery();
+
+			$jockey = $query->getSingleResult();
 			$entry->setJockey($jockey);
 
 			//set the jockey as no longer available

@@ -44,6 +44,11 @@ class Entry {
 	protected $score;
 
 	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $favourite;
+
+	/**
 	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
 	 */
 	protected $result;
@@ -99,6 +104,14 @@ class Entry {
 
 	public function getScore() {
 		return $this->score;
+	}
+
+	public function setFavourite($favourite) {
+		$this->favourite = $favourite;
+	}
+
+	public function getFavourite() {
+		return $this->favourite;
 	}
 
 	public function setResult($result) {

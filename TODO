@@ -1,14 +1,5 @@
 -- NEW FEATURES --
 
-- improve race generation
-	- pick jockeys with a better weight for the type of race
-
-- add form to select runners and class for a race instead of just generate button
-
-* make all hard coded numbers a parameter that can be changed??
-
-===== ONCE RACE ENGINE COMPLETE =====
-
 * need to see the results of races (i.e. when running results of races) - show order of horses etc
 * Get a list of jockeys
 * Get a list of trainers
@@ -42,6 +33,7 @@ http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase
 -- FUTURE CHANGES --
 
 
+* Add "going" to races and horses - better matches will give bonus to win race
 * make races hidden by default (private, until set to public - in case generation fails or something)
 * horses of 2 years only race other 2 year old horses (and only short distances)
 	- need to generate 2 year old horses now too?

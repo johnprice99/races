@@ -73,6 +73,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# FOSUserBundle
 fos_user:
     db_driver: orm
     firewall_name: main
@@ -102,3 +103,25 @@ fos_user:
     change_password:
         form:
             type: jp_user_change_password
+
+jp_race:
+    horse:
+        best_age: [7,8]
+        ok_age: [6,9]
+    race:
+        class_levels:
+            1: [8,9,10]
+            2: [4,5,6,7]
+            3: [1,2,3]
+        flat:
+            min_distance: 1100
+            max_distance: 3899
+            ideal_weight:
+                min: 8
+                max: 10
+        jump:
+            min_distance: 3520
+            max_distance: 7920
+            ideal_weight:
+                min: 9
+                max: 11

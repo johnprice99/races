@@ -34,7 +34,7 @@ class Race {
 	private $runnerCount;
 
 	/**
-	 * @ORM\Column(type="string", length=4)
+	 * @ORM\Column(type="string", length=10)
 	 */
 	private $type;
 
@@ -54,21 +54,7 @@ class Race {
 	protected $maiden;
 
 	public function __construct() {
-		$this->runnerCount = mt_rand(5, 15);
-		$this->setClass(mt_rand(1, 3));
 		$this->entries = new ArrayCollection();
-		$this->type = (mt_rand(1, 2) == 2) ? 'flat' : 'jump';
-		$this->minAge = mt_rand(3, 5);
-		$this->maiden = mt_rand(0, 1);
-
-		if ($this->type == 'flat') {
-			//if flat
-			$this->distance = mt_rand(1100, 3899);
-		}
-		else {
-			//if jump
-			$this->distance = mt_rand(3520, 7920);
-		}
 	}
 
 	public function setId($id) {
@@ -98,6 +84,10 @@ class Race {
 
 	public function getClass() {
 		return $this->class;
+	}
+
+	public function setRunnerCount($runnerCount) {
+		$this->runnerCount = $runnerCount;
 	}
 
 	public function getRunnerCount() {
