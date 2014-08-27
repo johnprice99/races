@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Horses{% endblock %}
+
+{% block body %}
+	<p>All horses</p>
+
+	{% if horses is not empty %}
+		<ul>
+			{% for horse in horses %}
+				<li><a href="{{ path('horse_view', { id: horse.id }) }}">{{ horse.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

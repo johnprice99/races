@@ -83,12 +83,13 @@ class RaceGenerator {
 		$runners = $query->getResult();
 		shuffle($runners);
 
-		foreach ($runners as $runner) {
+		foreach ($runners as $i => $runner) {
 			//set the horse as no longer available
 			$runner->setAvailable(false);
 
 			//create the entry
 			$entry = new Entry();
+			$entry->setPositionDrawn($i+1);
 			$entry->setHorse($runner);
 
 			//pick a jockey that matches the type of race

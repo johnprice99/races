@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ jockey.name }} | Jockey{% endblock %}
+
+{% block body %}
+
+	<p><a href="{{ path('jockey_list') }}">All Jockeys</a></p>
+
+	<p>Name: {{ jockey.name }}</p>
+	<p>Level: {{ jockey.level }}</p>
+	<p>Weight: {{ jockey.weight }}</p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('jockey_edit', { id: jockey.id }) }}">Edit</a></p>
+	{% endif %}
+{% endblock %}

@@ -5,49 +5,15 @@ namespace JP\RaceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
-use JP\RaceBundle\Form\Type\GenerateRaceType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * @Route("/race")
+ */
 class RaceController extends Controller {
 
 	/**
-	 * @Route("/race/generate", name="race_generate")
-	 * @Template()
-	 */
-	public function generateAction(Request $request) {
-		$form = $this->createForm(new GenerateRaceType());
-		$form->handleRequest($request);
-
-		if ($form->isValid()) {
-			$this->get('jp.race.generator')->generate($form->getData());
-			return $this->redirect($this->generateUrl('race_list'));
-		}
-
-		return array(
-			'form' => $form->createView(),
-		);
-	}
-
-	/**
-	 * @Route("/race/clear", name="race_clear")
-	 */
-	public function clearAction() {
-		$em = $this->getDoctrine()->getManager();
-
-		//delete all races
-		$em->createQuery('DELETE JPRaceBundle:Race r')->execute();
-
-		//find all horses and set their availability to 1
-		$em->createQuery('UPDATE JPRaceBundle:Horse h SET h.available = 1')->execute();
-
-		//find all jockeys and set their availability to 1
-		$em->createQuery('UPDATE JPRaceBundle:Jockey j SET j.available = 1')->execute();
-
-		return $this->redirect($this->generateUrl('race_list'));
-	}
-
-	/**
-	 * @Route("/race/list", name="race_list")
+	 * @Route("/list", name="race_list")
 	 * @Template()
 	 */
 	public function listAction() {
@@ -60,7 +26,7 @@ class RaceController extends Controller {
 	}
 
 	/**
-	 * @Route("/race/view/{id}", name="race_view")
+	 * @Route("/view/{id}", name="race_view")
 	 * @Template()
 	 */
 	public function viewAction($id) {
@@ -68,23 +34,56 @@ class RaceController extends Controller {
 		$repository = $this->getDoctrine()->getRepository('JPRaceBundle:Race');
 		$race = $repository->createQueryBuilder('r')->where('r.id = :id')->setParameter('id', $id)->setMaxResults(1)->getQuery()->getSingleResult();
 
+		if ($race->getComplete()) {
+			return $this->render('JPRaceBundle:Race:result.html.twig', array('race' => $race));
+		}
 
-		$this->get('jp.odds.calculator')->calculate($race);
-
-		//pass the race to the view to render the race card
-		return array(
-			'race' => $race
-		);
+		return $this->render('JPRaceBundle:Race:racecard.html.twig', array('race' => $race));
 	}
 
 	/**
-	 * @Route("/race/run", name="race_run")
+	 * @Route("/run", name="race_run_all")
+	 * @Security("has_role('ROLE_ADMIN')")
 	 */
-	public function runAction() {
+	public function runAllAction() {
 		$races = $this->getDoctrine()->getRepository('JPRaceBundle:Race')->findAll();
 		foreach ($races as $race) {
+			if (!$race->getComplete()) {
+				$this->get('jp.race.engine')->run($race);
+			}
+		}
+
+		return $this->redirect($this->generateUrl('race_list'));
+	}
+
+	/**
+	 * @Route("/run/{id}", name="race_run")
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function runAction($id) {
+		$race = $this->getDoctrine()->getRepository('JPRaceBundle:Race')->find($id);
+		if (!$race->getComplete()) {
 			$this->get('jp.race.engine')->run($race);
 		}
+
+		return $this->redirect($this->generateUrl('race_view', array('id' => $id)));
+	}
+
+	/**
+	 * @Route("/clear", name="race_clear")
+	 * @Security("has_role('ROLE_ADMIN')")
+	 */
+	public function clearAction() {
+		$em = $this->getDoctrine()->getManager();
+
+		//delete all races
+		$em->createQuery('DELETE JPRaceBundle:Race r')->execute();
+
+		//find all horses and set their availability to 1
+		$em->createQuery('UPDATE JPRaceBundle:Horse h SET h.available = 1')->execute();
+
+		//find all jockeys and set their availability to 1
+		$em->createQuery('UPDATE JPRaceBundle:Jockey j SET j.available = 1')->execute();
 
 		return $this->redirect($this->generateUrl('race_list'));
 	}

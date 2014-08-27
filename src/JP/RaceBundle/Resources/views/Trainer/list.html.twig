@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Trainers{% endblock %}
+
+{% block body %}
+	<p>All trainers</p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('generate_trainer') }}">Generate Trainers</a></p>
+	{% endif %}
+
+	{% if trainers is not empty %}
+		<ul>
+			{% for trainer in trainers %}
+				<li><a href="{{ path('trainer_view', { id: trainer.id }) }}">{{ trainer.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

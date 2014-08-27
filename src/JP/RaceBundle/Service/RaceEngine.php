@@ -75,7 +75,7 @@ class RaceEngine {
 			$form = $i;
 			if ($i > 9) { $form = 0; }
 
-			//if the score is 0, we need to pick what the problem was
+			//if the score is less than 0, we need to pick what the problem was
 			if ($entry->getResult() === -1) {
 				switch(mt_rand(1, 4)) {
 					case 1:
@@ -117,6 +117,8 @@ class RaceEngine {
 
 			$i++;
 		}
+
+		$race->setComplete(true);
 
 		//save the race changes
 		$this->em->persist($race);

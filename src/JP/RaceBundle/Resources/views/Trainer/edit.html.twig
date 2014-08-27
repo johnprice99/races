@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ trainer.name }} | Edit{% endblock %}
+
+{% block body %}
+	<p>Edit: {{ trainer.name }}</p>
+
+	{{ form(form) }}
+
+	<p><a href="{{ path('trainer_view', { id: trainer.id }) }}">Cancel</a></p>
+{% endblock %}

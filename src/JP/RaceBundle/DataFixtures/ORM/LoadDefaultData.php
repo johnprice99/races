@@ -44,69 +44,6 @@ class LoadDefaultData implements FixtureInterface, ContainerAwareInterface, Orde
 			$db->insert('horse_names', array('value' => trim(fgets($handle))));
 		}
 
-		echo "Creating Trainers...\n\n";
-		for ($i = 1; $i <= 100; $i++) {
-			$trainer = new Trainer();
-
-			//Generate a random name
-			$firstInitial = chr(mt_rand(ord('A'), ord('Z')));
-			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
-			$trainer->setName($firstInitial . '. ' . $name['value']);
-			$trainer->setLevel(mt_rand(50, 95));
-
-			$horsesInStable = mt_rand(1, 5);
-			for ($h = 1; $h <= $horsesInStable; $h++) {
-				$horse = new Horse();
-
-				$row = $db->fetchAssoc('SELECT * FROM `horse_names` ORDER BY rand() LIMIT 1');
-				//now remove the name so that it doesn't get picked again
-				$db->delete('horse_names', array('id' => $row['id']));
-				$horse->setName($row['value']);
-				$sex = (mt_rand(1, 2) == 2) ? 'm' : 'f';
-				$horse->setSex($sex);
-				$horse->setAge(mt_rand(3, 11));
-				$horse->setAvailable(true);
-				switch (mt_rand(1, 3)) {
-					case 1:
-						$horse->setPreferredType('flat');
-						break;
-					case 2:
-						$horse->setPreferredType('hurdle');
-						break;
-					case 3:
-						$horse->setPreferredType('fence');
-						break;
-				}
-
-				$horse->setStamina(mt_rand(50, 100));
-				$horse->setBehaviour(mt_rand(6, 9));
-				$horse->generateLevel();
-
-				$trainer->addHorse($horse);
-			}
-
-			$manager->persist($trainer);
-			$manager->flush();
-		}
-
-		echo "Creating Jockeys...\n\n";
-		for ($i = 1; $i <= 100; $i++) {
-			$jockey = new Jockey();
-
-			//Generate a random name
-			$firstInitial = chr(mt_rand(ord('A'), ord('Z')));
-			$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
-			$jockey->setName($firstInitial . '. ' . $name['value']);
-
-			$weight = mt_rand(8, 12) . '.' . mt_rand(0, 14);
-			$jockey->setWeight($weight);
-			$jockey->setLevel(mt_rand(50, 95));
-			$jockey->setAvailable(true);
-
-			$manager->persist($jockey);
-			$manager->flush();
-		}
-
 		echo "Loading Default User...\n\n";
 		$userManager = $this->container->get('fos_user.user_manager');
 		// Create our user and set details

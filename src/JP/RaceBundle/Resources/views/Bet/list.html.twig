@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Place Bet{% endblock %}
+
+{% block body %}
+	<p>{{ entry.horse.name }} - {{ entry.odds }}</p>
+
+	{{ form(form) }}
+{% endblock %}

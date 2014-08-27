@@ -49,14 +49,24 @@ class Entry {
 	protected $favourite;
 
 	/**
-	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
+	 * @ORM\Column(type="smallint", nullable=true)
 	 */
 	protected $result;
 
 	/**
 	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
 	 */
+	protected $positionDrawn;
+
+	/**
+	 * @ORM\Column(type="smallint", options={"unsigned"=true}, nullable=true)
+	 */
 	protected $finalPosition;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="Bet", mappedBy="entry")
+	 */
+	protected $bets;
 
 	public function setId($id) {
 		$this->id = $id;
@@ -122,12 +132,28 @@ class Entry {
 		return $this->result;
 	}
 
+	public function setPositionDrawn($positionDrawn) {
+		$this->positionDrawn = $positionDrawn;
+	}
+
+	public function getPositionDrawn() {
+		return $this->positionDrawn;
+	}
+
 	public function setFinalPosition($finalPosition) {
 		$this->finalPosition = $finalPosition;
 	}
 
 	public function getFinalPosition() {
 		return $this->finalPosition;
+	}
+
+	public function setBets($bets) {
+		$this->bets = $bets;
+	}
+
+	public function getBets() {
+		return $this->bets;
 	}
 
 }

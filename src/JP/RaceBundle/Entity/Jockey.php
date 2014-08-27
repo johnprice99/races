@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="jockey")
+ * @ORM\Entity(repositoryClass="JP\RaceBundle\Entity\Repository\JockeyRepository")
  */
 class Jockey extends Person {
 

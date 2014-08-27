@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ trainer.name }} | Trainer{% endblock %}
+
+{% block body %}
+
+	<p><a href="{{ path('trainer_list') }}">All Trainers</a></p>
+
+	<p>Name: {{ trainer.name }}</p>
+	<p>Level: {{ trainer.level }}</p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('trainer_edit', { id: trainer.id }) }}">Edit</a></p>
+	{% endif %}
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('generate_horse', { trainerID: trainer.id }) }}">Generate Horses</a></p>
+	{% endif %}
+
+	{% if trainer.stable is not empty %}
+		<ul>
+			{% for horse in trainer.stable %}
+				<li><a href="{{ path('horse_view', { id: horse.id }) }}">{{ horse.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No Horses</p>
+	{% endif %}
+{% endblock %}

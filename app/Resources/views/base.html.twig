@@ -24,17 +24,32 @@
 				<a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
 			{% endif %}
 
-			<p><a href="{{ path('race_generate') }}">Generate A Race</a></p>
-			<p><a href="{{ path('race_list') }}">All Races</a></p>
-			<p><a href="{{ path('race_run') }}">Run Races</a></p>
-			<p><a href="{{ path('race_clear') }}">Clear Races</a></p>
+			{#<p><a href="{{ path('bet_list') }}">My Bets</a></p>#}
+
+			<p><a href="{{ path('race_list') }}">Today's Races</a></p>
+
+			<p><a href="{{ path('trainer_list') }}">Trainers</a></p>
+			<p><a href="{{ path('jockey_list') }}">Jockeys</a></p>
+			<p><a href="{{ path('horse_list') }}">Horses</a></p>
+
+			{% if is_granted('ROLE_ADMIN') %}
+				<p><a href="{{ path('generate_single_race') }}">Generate Single Race</a></p>
+				<p><a href="{{ path('generate_all_races') }}">Generate All Races</a></p>
+				<p><a href="{{ path('race_run_all') }}">Run Today's Races</a></p>
+				<p><a href="{{ path('race_clear') }}">Clear Races</a></p>
+			{% endif %}
 
 			{% if app.user is not null %}
 				&curren;{{ app.user.balance|number_format }}
 			{% endif %}
+
+			<p><a href="#">How to play</a></p>
 		</header>
+
+		{% include 'flashMessages.html.twig' %}
+
 		{% block body %}{% endblock %}
-		<footer>Footer</footer>
+		<footer>&copy; Copyright {{ 'now'|date('Y') }}</footer>
 
 		{% block javascripts %}{% endblock %}
 	</body>

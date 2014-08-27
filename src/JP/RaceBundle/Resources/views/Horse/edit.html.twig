@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ horse.name }} | Edit{% endblock %}
+
+{% block body %}
+	<p>Edit: {{ horse.name }}</p>
+
+	{{ form(form) }}
+
+	<p><a href="{{ path('horse_view', { id: horse.id }) }}">Cancel</a></p>
+{% endblock %}

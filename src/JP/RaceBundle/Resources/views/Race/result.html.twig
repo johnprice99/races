@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}View Race{% endblock %}
+
+{% block body %}
+	<p>{% include('JPRaceBundle:Race:title.html.twig') %}</p>
+
+	<p><a href="{{ path('bet_collect', { betID: 2 }) }}">Collect Winnings</a></p>
+
+	<table cellpadding="10" cellspacing="5">
+		<tr>
+			<th align="left">Position</th>
+			<th align="left">Horse</th>
+			<th align="left">Trainer</th>
+			<th align="left">Age</th>
+			<th align="left">Weight</th>
+			<th align="left">Jockey</th>
+			<th align="left">SP</th>
+		</tr>
+		{% for entry in race.entries %}
+			<tr>
+				<td>{% if entry.result >= 0 %}{{ entry.finalPosition }}{% else %}{{ entry.horse.form|slice(-1) }}{% endif %}</td>
+				<td>{{ entry.positionDrawn }} <a href="{{ path('horse_view', { id: entry.horse.id }) }}">{{ entry.horse.name }}</a>{% if entry.favourite %} (F){% endif %}</td>
+				<td><a href="{{ path('trainer_view', { id: entry.horse.trainer.id }) }}">{{ entry.horse.trainer.name }}</a></td>
+				<td>{{ entry.horse.age }}</td>
+				<td>{{ entry.jockey.weight }}</td>
+				<td><a href="{{ path('jockey_view', { id: entry.jockey.id }) }}">{{ entry.jockey.name }}</a></td>
+				<td>{% if entry.result >= 0 %}{{ entry.odds }}{% endif %}</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	<h3>Form Key</h3>
+	<ul>
+		<li>1-9: Position Finished</li>
+		<li>S: Slipped Up</li>
+		<li>U: Unseated Rider</li>
+		<li>P: Pulled Up</li>
+		<li>F: Fell</li>
+		<li>R: Refused to run</li>
+	</ul>
+{% endblock %}

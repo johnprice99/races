@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Generate {{ genTitle }}{% endblock %}
+
+{% block body %}
+	<p>Generate {{ genTitle }}</p>
+
+	{{ form(form) }}
+{% endblock %}

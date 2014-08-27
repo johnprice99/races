@@ -5,7 +5,7 @@
 {% block body %}
 	{% for race in races %}
 		<div>
-			<p><a href="{{ path('race_view', {'id' : race.id}) }}">{% include('JPRaceBundle:Race:title.html.twig') %}</a></p>
+			<p><a href="{{ path('race_view', {'id' : race.id}) }}">{% include('JPRaceBundle:Race:title.html.twig') %}{% if race.complete %} COMPLETE{% endif %}</a></p>
 		</div>
 	{% endfor %}
 {% endblock %}

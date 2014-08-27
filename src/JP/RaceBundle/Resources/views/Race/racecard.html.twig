@@ -1,0 +1,51 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}View Race{% endblock %}
+
+{% block body %}
+	<p>{% include('JPRaceBundle:Race:title.html.twig') %}</p>
+
+	{% if is_granted('ROLE_ADMIN') and race.complete == 0 %}
+		<p><a href="{{ path('race_run', { id: race.id }) }}">Run this race</a></p>
+	{% endif %}
+
+	<table cellpadding="10" cellspacing="5">
+		<tr>
+			<th align="left">#</th>
+			<th align="left">Form</th>
+			{#<th align="left">Colours</th>#}
+			<th align="left">Horse</th>
+			<th align="left">Age</th>
+			<th align="left">Weight</th>
+			<th align="left">Trainer</th>
+			<th align="left">Jockey</th>
+			<th align="left">Odds</th>
+			{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}<th>&nbsp;</th>{% endif %}
+		</tr>
+		{% for entry in race.entries %}
+			<tr>
+				<td>{{ entry.positionDrawn }}</td>
+				<td>{{ entry.horse.form }}</td>
+				{#<td><img src="" alt="" width="20" height="20" /></td>#}
+				<td><a href="{{ path('horse_view', { id: entry.horse.id }) }}">{{ entry.horse.name }}</a>{% if entry.favourite %} (F){% endif %}</td>
+				<td>{{ entry.horse.age }}</td>
+				<td>{{ entry.jockey.weight }}</td>
+				<td><a href="{{ path('trainer_view', { id: entry.horse.trainer.id }) }}">{{ entry.horse.trainer.name }}</a></td>
+				<td><a href="{{ path('jockey_view', { id: entry.jockey.id }) }}">{{ entry.jockey.name }}</a></td>
+				<td>{{ entry.odds }}</td>
+				{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}<td><a href="{{ path('bet_place', { entryID: entry.id }) }}">Place Bet</a></td>{% endif %}
+			</tr>
+		{% endfor %}
+	</table>
+
+	<h3>Form Key</h3>
+	<ul>
+		<li>1-9: Position Finished</li>
+		<li>S: Slipped Up</li>
+		<li>U: Unseated Rider</li>
+		<li>P: Pulled Up</li>
+		<li>F: Fell</li>
+		<li>R: Refused to run</li>
+	</ul>
+
+{% endblock %}

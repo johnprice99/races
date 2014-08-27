@@ -8,11 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="trainer")
+ * @ORM\Entity(repositoryClass="JP\RaceBundle\Entity\Repository\TrainerRepository")
  */
 class Trainer extends Person {
 
 	/**
-	 * @ORM\OneToMany(targetEntity="Horse", mappedBy="category", cascade={"persist"})
+	 * @ORM\OneToMany(targetEntity="Horse", mappedBy="trainer", cascade={"persist"})
 	 */
 	protected $stable;
 

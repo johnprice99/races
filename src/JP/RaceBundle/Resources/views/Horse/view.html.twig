@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ horse.name }} | {{ horse.trainer.name }}{% endblock %}
+
+{% block body %}
+	<p>Name: {{ horse.name }}</p>
+	<p>Age: {{ horse.age }}</p>
+	<p>Sex: {{ horse.sex }}</p>
+	<p>Form: {{ horse.form }}</p>
+	<p>Preferred Type: {{ horse.preferredType }}</p>
+	<p>Stamina: {{ horse.stamina }}</p>
+	<p>Behaviour: {{ horse.behaviour }}</p>
+	<p>Level: {{ horse.level }}</p>
+
+	<p>Trainer: <a href="{{ path('trainer_view', { id: horse.trainer.id }) }}">{{ horse.trainer.name }}</a></p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('horse_edit', { id: horse.id }) }}">Edit</a></p>
+	{% endif %}
+{% endblock %}

@@ -20,6 +20,7 @@ class Race {
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Entry", mappedBy="race", cascade={"persist"})
+	 * @ORM\OrderBy({"finalPosition" = "ASC", "positionDrawn" = "ASC"})
 	 */
 	protected $entries;
 
@@ -52,6 +53,11 @@ class Race {
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $maiden;
+
+	/**
+	 * @ORM\Column(type="boolean", nullable=true)
+	 */
+	protected $complete;
 
 	public function __construct() {
 		$this->entries = new ArrayCollection();
@@ -125,4 +131,13 @@ class Race {
 	public function getMaiden() {
 		return $this->maiden;
 	}
+
+	public function setComplete($complete) {
+		$this->complete = $complete;
+	}
+
+	public function getComplete() {
+		return $this->complete;
+	}
+
 }

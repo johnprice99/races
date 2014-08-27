@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Jockeys{% endblock %}
+
+{% block body %}
+	<p>All jockeys</p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('generate_jockey') }}">Generate Jockeys</a></p>
+	{% endif %}
+
+	{% if jockeys is not empty %}
+		<ul>
+			{% for jockey in jockeys %}
+				<li><a href="{{ path('jockey_view', { id: jockey.id }) }}">{{ jockey.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}
