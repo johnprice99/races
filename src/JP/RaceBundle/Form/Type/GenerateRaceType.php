@@ -27,6 +27,9 @@ class GenerateRaceType extends AbstractType {
 					'fence' => 'Fences',
 				),
 			))
+//			->add('nursery', 'checkbox', array(
+//				'required' => false,
+//			))
 			->add('generate', 'submit');
 	}
 

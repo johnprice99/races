@@ -33,7 +33,13 @@
 				<td><a href="{{ path('trainer_view', { id: entry.horse.trainer.id }) }}">{{ entry.horse.trainer.name }}</a></td>
 				<td><a href="{{ path('jockey_view', { id: entry.jockey.id }) }}">{{ entry.jockey.name }}</a></td>
 				<td>{{ entry.odds }}</td>
-				{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}<td><a href="{{ path('bet_place', { entryID: entry.id }) }}">Place Bet</a></td>{% endif %}
+				{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+					<td>
+						{% if app.user.balance > 0 %}
+							<a href="{{ path('bet_place', { entryID: entry.id }) }}">Place Bet</a>
+						{% endif %}
+					</td>
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</table>

@@ -59,6 +59,11 @@ class Race {
 	 */
 	protected $complete;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Bet", mappedBy="race")
+	 */
+	protected $bets;
+
 	public function __construct() {
 		$this->entries = new ArrayCollection();
 	}
@@ -138,6 +143,14 @@ class Race {
 
 	public function getComplete() {
 		return $this->complete;
+	}
+
+	public function setBets($bets) {
+		$this->bets = $bets;
+	}
+
+	public function getBets() {
+		return $this->bets;
 	}
 
 }

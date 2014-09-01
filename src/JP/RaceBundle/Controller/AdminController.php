@@ -208,8 +208,16 @@ class AdminController extends Controller {
 		$horse->setName($row['value']);
 		$sex = (mt_rand(1, 2) == 2) ? 'm' : 'f';
 		$horse->setSex($sex);
+//		$horse->setAge(mt_rand(2, 11)); used for when we generate 2 year old horses for nursery races
 		$horse->setAge(mt_rand(3, 11));
 		$horse->setAvailable(true);
+		if ($sex === 'm') {
+			$horse->setGelded(mt_rand(0, 1));
+		}
+		elseif ($horse->getAge() > 3) { //don't breed horses younger than 4
+			$horse->setBred(mt_rand(0, 1));
+		}
+
 		switch (mt_rand(1, 3)) {
 			case 1:
 				$horse->setPreferredType('flat');

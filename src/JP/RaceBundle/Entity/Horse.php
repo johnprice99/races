@@ -79,6 +79,16 @@ class Horse {
 	 */
 	protected $jumpMaiden = 1;
 
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $bred = 0;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $gelded = 0;
+
 	public function setId($id) {
 		$this->id = $id;
 	}
@@ -212,6 +222,40 @@ class Horse {
 
 	public function getJumpMaiden() {
 		return $this->jumpMaiden;
+	}
+
+	public function setBred($bred) {
+		$this->bred = $bred;
+	}
+
+	public function getBred() {
+		return $this->bred;
+	}
+
+	public function setGelded($gelded) {
+		$this->gelded = $gelded;
+	}
+
+	public function getGelded() {
+		return $this->gelded;
+	}
+
+	public function getDescription() {
+		if ($this->sex === 'm') {
+			if ($this->gelded) {
+				return 'gelding';
+			}
+			if ($this->age < 5) {
+				return 'colt';
+			}
+			return 'horse';
+		}
+		else {
+			if ($this->bred || $this->age >= 5) {
+				return 'mare';
+			}
+			return 'filly';
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ class User extends BaseUser {
 	/**
 	 * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=true)
 	 */
-	protected $balance = 10000;
+	protected $balance = 100;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Bet", mappedBy="user")
@@ -24,6 +24,8 @@ class User extends BaseUser {
 	protected $bets;
 
 	public function __construct() {
+		parent::__construct();
+
 		$this->bets = new ArrayCollection();
 	}
 

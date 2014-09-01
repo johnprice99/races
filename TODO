@@ -1,18 +1,16 @@
 -- NEW FEATURES --
 
-* show the user their bets
-* should only be able to collect your bet when your horse wins
-* dont let users bet over their limit
-	- hide the button if they have 0 money
-
-after basic betting is done:
-
-* clean up the interface a lot - make a lot more ajax calls
-* create a "help" manual
+* fill out content for the "help" manual
+* Styling
+	* create a header and navigation (including mobile off-canvas)
+	* create a footer
+	* create form styles
+	* create content styles
+* clean up the interface a lot - make a lot more ajax calls? - angular? bb?
 
 -- NOTES --
 
-what does number in brackets mean on race card
+what does number in brackets mean on race card (handicap?)
 http://en.wikipedia.org/wiki/Racecard
 http://www.horse-smart.com/definitions.htm
 http://en.wikipedia.org/wiki/Form_(horse_racing)
@@ -24,15 +22,14 @@ http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase
 
 -- BUGS --
 
-* look at database calls when generating a race
 
 -- FUTURE CHANGES --
 
-* Add paypal integration as microtransaction
-* Make the odds change based on how many bets there are on a particular entry (dynamic odds)
-* Ability to "buy" a horse and have it make money for you racing
-* Add colours to races - create some sort of colours generator? or is each colour associated with each owner?
-* Add "going" to races and horses - better matches will give bonus to win race
-* make races hidden by default (private, until set to public - in case generation fails or something)
 * horses of 2 years only race other 2 year old horses (and only short distances)
 	- need to generate 2 year old horses now too?
+* Add "going" to races and horses - better matches will give bonus to win race
+* change male horses level based on whether they have been gelded or not
+* Add colours to races - create some sort of colours generator? or is each colour associated with each owner?
+* Make the odds change based on how many bets there are on a particular entry (dynamic odds)
+* Ability to "buy" a horse and have it make money for you racing
+* Add paypal integration as microtransaction - £1 per 10cr in-game money, options of £1/10, £10/150, £50/1000

@@ -24,7 +24,7 @@
 				<a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a>
 			{% endif %}
 
-			{#<p><a href="{{ path('bet_list') }}">My Bets</a></p>#}
+			<p><a href="{{ path('bet_list') }}">My Bets</a></p>
 
 			<p><a href="{{ path('race_list') }}">Today's Races</a></p>
 
@@ -40,10 +40,10 @@
 			{% endif %}
 
 			{% if app.user is not null %}
-				&curren;{{ app.user.balance|number_format }}
+				{{ app.user.balance|number_format }}cr
 			{% endif %}
 
-			<p><a href="#">How to play</a></p>
+			<p><a href="{{ path('help_page', { path: 'index' }) }}">How to play</a></p>
 		</header>
 
 		{% include 'flashMessages.html.twig' %}

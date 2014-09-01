@@ -25,6 +25,7 @@ class RaceGenerator {
 		$runners = $options['runners'];
 		$raceType = $options['type'];
 		$raceClass = $options['class'];
+//		$nursery = $options['nursery'];
 
 		$configName = ($raceType === 'flat') ? 'flat' : 'jump';
 

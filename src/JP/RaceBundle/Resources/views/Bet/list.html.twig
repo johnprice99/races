@@ -1,9 +1,23 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Place Bet{% endblock %}
+{% block title %}My Bets{% endblock %}
 
 {% block body %}
-	<p>{{ entry.horse.name }} - {{ entry.odds }}</p>
-
-	{{ form(form) }}
+	{% if bets is not empty %}
+		<ul>
+			{% for bet in bets %}
+				<li>
+					{{ bet.horse.name }} @ {{ bet.odds }}
+					{% if bet.race %}
+						<a href="{{ path('race_view', { id: bet.race.id }) }}">{% include '@JPRace/Race/title.html.twig' with {'race': bet.race} %}</a>
+						{% if bet.race.complete and bet.entry.finalPosition == 1 %}
+							<a href="{{ path('bet_collect', { id: bet.id }) }}">Collect Winnings</a>
+						{% endif %}
+					{% else %}
+						NON-WINNER <a href="{{ path('bet_remove', { id: bet.id }) }}">Remove</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 {% endblock %}
