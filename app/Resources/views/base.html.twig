@@ -5,10 +5,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>{% block title %}{% endblock %} | {{ siteName }}</title>
 
+		{% stylesheets "bundles/jprace/css/global.css" filter="cssrewrite" %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+		{% endstylesheets %}
+
 		{% block stylesheets %}{% endblock %}
 		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 	</head>
 	<body>
+		{#To highlight correct route#}
+		{#{% set currentRoute = app.request.getUri() %}#}
+		{#{% if "/url" in currentRoute %}#}
+
 		<header>
 			Header
 			{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}

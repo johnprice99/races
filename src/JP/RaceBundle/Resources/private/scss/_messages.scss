@@ -1,0 +1,40 @@
+%flashMessage {
+	@include borderRadius(5);
+	@include boxShadow();
+	@include animation(fadein, 1s);
+	color: #FFF;
+	line-height: 150%;
+	padding: 20px 20px 20px 50px;
+	position: relative;
+	text-align: justify;
+	text-shadow: 1px 1px #000;
+	margin-bottom: 20px;
+
+	&:before {
+		@include fontSize(24);
+		@include size(24px);
+		color: #FFF;
+		position: absolute;
+		top: 50%;
+		margin-top: -12px;
+		left: 15px;
+	}
+}
+
+.flashError {
+	@extend %flashMessage;
+	@include gradient($red);
+	@include icon('fa-times-circle');
+}
+
+.flashWarning {
+	@extend %flashMessage;
+	@include gradient($gold);
+	@include icon('fa-exclamation-triangle');
+}
+
+.flashSuccess {
+	@extend %flashMessage;
+	@include gradient($green);
+	@include icon('fa-check-circle');
+}

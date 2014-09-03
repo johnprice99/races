@@ -1,0 +1,88 @@
+@mixin fontSize($size: $defaultFontSize) {
+	font-size: $size+px;
+	font-size: ($size/10)+rem;
+}
+
+@mixin icon($iconName) {
+	&:before {
+		@extend .fa, .#{$iconName};
+	}
+}
+
+@mixin borderRadius($radius) {
+	-webkit-border-radius: $radius+px;
+	-moz-border-radius: $radius+px;
+	border-radius: $radius+px;
+}
+
+@mixin boxShadow() {
+	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+@mixin gradient($from, $to: darken($from, 13%)) {
+	background-color: $from;
+	background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+	background-image: -webkit-linear-gradient(top, $from 0%, $to 100%);
+	background-image: -moz-linear-gradient(top, $from 0%, $to 100%);
+	background-image: -o-linear-gradient(top, $from 0%, $to 100%);
+	background-image: linear-gradient(to bottom, $from 0%, $to 100%);
+}
+
+@mixin gradientWithHover($from) {
+	@include gradient($from);
+	&:hover {
+		@include gradient(darken($from, 13%), $from);
+	}
+}
+
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
+@mixin responsive($width) {
+	@media all and (max-width: $width+px) {
+		@content;
+	}
+}
+
+@mixin retina($filename, $width, $height) {
+	@media (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+		background: {
+			image: url($filename);
+			size: $width $height;
+		}
+	}
+}
+
+@mixin animation($animationName, $time) {
+	-webkit-animation: $animationName $time; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: $animationName $time; /* Firefox < 16 */
+	-ms-animation: $animationName $time; /* Internet Explorer */
+	-o-animation: $animationName $time; /* Opera < 12.1 */
+	animation: $animationName $time;
+}
+
+%notSelectable {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+%hiddenBackface {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+@mixin translate3d($x, $y, $z) {
+	-webkit-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+	-moz-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+	-ms-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+	-o-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+	transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+}

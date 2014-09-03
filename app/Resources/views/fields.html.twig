@@ -3,13 +3,13 @@
 		{% if attr.noWrappingDiv is not defined %}<div class="formRow clearfix">{% endif %}
 		{% if (form.vars.block_prefixes.1 == 'checkbox') %}
 			{{ form_widget(form) }}
-			{{ form_label(form) }}
+			{{ form_label(form, null, {'label_attr': {'class': 'checkboxLabel'}}) }}
 		{% else %}
 			{{ form_label(form) }}
 			{% if (form.vars.block_prefixes.1 == 'choice') %}
-				<div class="withIcon">{{ form_widget(form) }}<i class="fa fa-sort"></i></div>
+				<div class="fieldWithIcon select">{{ form_widget(form) }}</div>
 			{% elseif (form.vars.block_prefixes.1 == 'date') %}
-				<div class="withIcon">{{ form_widget(form) }}<i class="fa fa-calendar"></i></div>
+				<div class="fieldWithIcon date">{{ form_widget(form) }}</div>
 			{% else %}
 				{{ form_widget(form) }}
 			{% endif %}

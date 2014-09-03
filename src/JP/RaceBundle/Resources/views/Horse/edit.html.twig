@@ -7,5 +7,5 @@
 
 	{{ form(form) }}
 
-	<p><a href="{{ path('horse_view', { id: horse.id }) }}">Cancel</a></p>
+	<a href="{{ path('horse_view', { id: horse.id }) }}" class="button secondary">Cancel</a>
 {% endblock %}
