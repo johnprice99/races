@@ -61,17 +61,6 @@ class UserType extends AbstractType {
 			));
 		}
 
-//        if ($user->hasRole('ROLE_SUPER_ADMIN') || $user->hasRole('ROLE_DEVELOPER')) {
-//            $builder->add('employer', 'entity', array(
-//                'class' => 'JPJobBoardBundle:Employer',
-//                'property' => 'name',
-//                'empty_value' => '-- Select an employer --',
-//                'query_builder' => function (EntityRepository $er) {
-//                    return $er->createQueryBuilder('e')->orderBy('e.name', 'ASC');
-//                },
-//            ));
-//        }
-
 		$builder
 			->add('roles', 'choice', array(
 				'expanded' => true,

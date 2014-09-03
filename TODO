@@ -2,11 +2,15 @@
 
 * fill out content for the "help" manual
 * Styling
-	* create a header and navigation (including mobile off-canvas)
 	* create a footer
-	* create form styles
 	* create content styles
 * clean up the interface a lot - make a lot more ajax calls? - angular? bb?
+
+* To show on homepage
+	- Today's races and results
+	- Top 10 users (in terms of account balance and win-percentage) - each user must have bet at least once
+	- Quick little intro
+	- How it works
 
 -- NOTES --
 

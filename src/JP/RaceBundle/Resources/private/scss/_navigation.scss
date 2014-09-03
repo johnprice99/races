@@ -1,0 +1,178 @@
+#viewport {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	min-height: 100%;
+	height: 100%;
+}
+
+#pageWrap {
+	@extend %hiddenBackface;
+	@include translate3d(0, 1, 0); //have to set the 1, otherwise the position fixed nav bar doesnt fix properly
+	-webkit-transition: -webkit-transform 200ms ease;
+	-moz-transition: -moz-transform 200ms ease;
+	-o-transition: -o-transform 200ms ease;
+	transition: transform 200ms ease;
+	min-height: 100%;
+
+	&.navLeftOpen { @include translate3d(80%, 0, 0); }
+}
+
+#showLeftNavigation {
+	@include fontSize(32);
+	color: #000;
+	font-weight: normal;
+	display: none;
+	width: 64px;
+	height: 64px;
+	line-height: 64px;
+	text-align: center;
+	text-decoration: none;
+	border-right: 1px solid #CCC;
+
+	@include responsive($mobileWidth) { display: block; }
+}
+
+@mixin offCanvasNav() {
+	//	@extend %hiddenBackface;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
+	background-color: #666 !important;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 80%;
+	height: 100%;
+
+	li {
+		display: block;
+		float: none;
+		border-bottom: 1px solid #FFF;
+		text-transform: uppercase;
+
+		a {
+			display: block;
+			color: #FFF;
+			text-decoration: none !important;
+			padding: 15px 25px;
+
+			&:hover { background-color: #333; }
+		}
+	}
+}
+
+nav#leftMenu {
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	width: 100%;
+
+	h3, a {
+		color: #FFF;
+		padding: 10px;
+	}
+
+	h3 {
+		@include fontSize(14);
+		font-weight: normal;
+		display: none;
+		cursor: pointer;
+	}
+
+	a {
+		color: #FFF;
+		text-decoration: none;
+		display: block;
+
+		&:hover, &.selected { background-color: $green; }
+	}
+
+	li {
+		list-style-type: none;
+		float: left;
+		margin: 0 10px 0 0;
+		@include responsive(850) { margin: 0; }
+
+		&.right { float: right; }
+		&.right, &.right li {
+			margin: 0 0 0 10px;
+			@include responsive(850) { margin: 0; }
+		}
+
+		&.heading { display: none; }
+
+		@media all and (min-width: $mobileWidth+px) {
+			&.hasSubMenu {
+				background-color: $red;
+				position: relative;
+
+				h3 { display: block; }
+
+				ul {
+					min-width: 100%;
+					display: none;
+					position: absolute;
+					left: -2px;
+					background-color: #FFF;
+					border-radius: 0 0 5px 5px;
+					border-left: 2px solid #000;
+					border-right: 2px solid #000;
+					border-bottom: 2px solid #000;
+					@include boxShadow();
+
+					li {
+						float: none;
+						border-bottom: 1px solid #CCC;
+						margin: 0;
+
+						&:last-child { border-bottom: 0; }
+
+						a {
+							color: #000;
+							white-space: nowrap;
+							&:hover { background-color: #CCC; }
+						}
+					}
+				}
+
+				&:hover ul { display: block; }
+			}
+		}
+	}
+
+	@include responsive($mobileWidth) {
+		@include offCanvasNav();
+		@include translate3d(-100%, 0, 0);
+		-webkit-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+		-moz-box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+		box-shadow: inset -1.5em 0 1.5em -0.75em rgba(0, 0, 0, 0.25);
+
+		li {
+			margin: 0 !important;
+			ul li:last-child { border-bottom: 0; }
+			&.right { float: none; }
+
+			&.heading {
+				@include fontSize(12);
+				display: block;
+				color: #FFF;
+				padding: 5px 25px;
+				background-color: #333;
+			}
+		}
+
+		h3 {
+			@include fontSize(12);
+			display: block;
+			color: #FFF;
+			padding: 5px 25px;
+			background-color: #333;
+			border-bottom: 1px solid #FFF;
+		}
+	}
+}

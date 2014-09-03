@@ -35,9 +35,24 @@ body {
 	color: $textColor;
 	min-height: 100%;
 	height: 100%;
+
+	padding-top: 36px;
+	@include responsive($mobileWidth) { padding-top: 0px; }
 }
 
 a.jsButton { cursor: pointer; }
 
+
+
+/* --- Layout --- */
+
+header {
+	border-bottom: 1px solid #CCC;
+}
+
+
 @import "messages";
 @import "forms";
+@import "navigation";
+
+
