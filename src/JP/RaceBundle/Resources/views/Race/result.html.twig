@@ -8,6 +8,7 @@
 	<table cellpadding="10" cellspacing="5">
 		<tr>
 			<th align="left">Position</th>
+			<th align="left">Colours</th>
 			<th align="left">Horse</th>
 			<th align="left">Trainer</th>
 			<th align="left">Age</th>
@@ -18,6 +19,7 @@
 		{% for entry in race.entries %}
 			<tr>
 				<td>{% if entry.result >= 0 %}{{ entry.finalPosition }}{% else %}{{ entry.horse.form|slice(-1) }}{% endif %}</td>
+				<td>{% include 'JPRaceBundle:Owner/Silks:silk.html.twig' with { owner: entry.horse.owner } %}</td>
 				<td>{{ entry.positionDrawn }} <a href="{{ path('horse_view', { id: entry.horse.id }) }}">{{ entry.horse.name }}</a>{% if entry.favourite %} (F){% endif %}</td>
 				<td><a href="{{ path('trainer_view', { id: entry.horse.trainer.id }) }}">{{ entry.horse.trainer.name }}</a></td>
 				<td>{{ entry.horse.age }}</td>

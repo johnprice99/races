@@ -1,0 +1,5 @@
+<div class="silk">
+	{% include 'JPRaceBundle:Owner/Silks/Helmet:' ~ owner.helmetStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+	{% include 'JPRaceBundle:Owner/Silks/Sleeve:' ~ owner.sleeveStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+	{% include 'JPRaceBundle:Owner/Silks/Jersey:' ~ owner.jerseyStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+</div>

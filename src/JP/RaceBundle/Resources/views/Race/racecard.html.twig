@@ -13,7 +13,7 @@
 		<tr>
 			<th align="left">#</th>
 			<th align="left">Form</th>
-			{#<th align="left">Colours</th>#}
+			<th align="left">Colours</th>
 			<th align="left">Horse</th>
 			<th align="left">Age</th>
 			<th align="left">Weight</th>
@@ -26,8 +26,12 @@
 			<tr>
 				<td>{{ entry.positionDrawn }}</td>
 				<td>{{ entry.horse.form }}</td>
-				{#<td><img src="" alt="" width="20" height="20" /></td>#}
-				<td><a href="{{ path('horse_view', { id: entry.horse.id }) }}">{{ entry.horse.name }}</a>{% if entry.favourite %} (F){% endif %}</td>
+				<td>{% include 'JPRaceBundle:Owner/Silks:silk.html.twig' with { owner: entry.horse.owner } %}</td>
+				<td>
+					{% if entry.favourite %}<strong>{% endif %}
+					<a href="{{ path('horse_view', { id: entry.horse.id }) }}">{{ entry.horse.name }}</a>{% if entry.favourite %} (F){% endif %}
+					{% if entry.favourite %}</strong>{% endif %}
+				</td>
 				<td>{{ entry.horse.age }}</td>
 				<td>{{ entry.jockey.weight }}</td>
 				<td><a href="{{ path('trainer_view', { id: entry.horse.trainer.id }) }}">{{ entry.horse.trainer.name }}</a></td>

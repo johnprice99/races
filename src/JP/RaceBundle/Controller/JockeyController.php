@@ -33,6 +33,10 @@ class JockeyController extends Controller {
 	public function viewAction($id) {
 		$jockey = $this->getDoctrine()->getRepository('JPRaceBundle:Jockey')->find($id);
 
+		if (!$jockey) {
+			throw $this->createNotFoundException('Jockey not found');
+		}
+
 		return array(
 			'jockey' => $jockey,
 		);

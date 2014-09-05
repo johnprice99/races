@@ -7,7 +7,7 @@
 		<ul>
 			{% for bet in bets %}
 				<li>
-					{{ bet.horse.name }} @ {{ bet.odds }}
+					{{bet.stake }}cr on {{ bet.horse.name }} @ {{ bet.odds }}
 					{% if bet.race %}
 						<a href="{{ path('race_view', { id: bet.race.id }) }}">{% include '@JPRace/Race/title.html.twig' with {'race': bet.race} %}</a>
 						{% if bet.race.complete and bet.entry.finalPosition == 1 %}

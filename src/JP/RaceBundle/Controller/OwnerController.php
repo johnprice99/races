@@ -33,6 +33,10 @@ class OwnerController extends Controller {
 	public function viewAction($id) {
 		$owner = $this->getDoctrine()->getRepository('JPRaceBundle:Owner')->find($id);
 
+		if (!$owner) {
+			throw $this->createNotFoundException('Owner not found');
+		}
+
 		return array(
 			'owner' => $owner,
 		);

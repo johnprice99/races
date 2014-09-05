@@ -11,6 +11,8 @@
 	<p>Behaviour: {{ horse.behaviour }}</p>
 	<p>Level: {{ horse.level }}</p>
 
+	<p>Owner: <a href="{{ path('owner_view', { id: horse.owner.id }) }}">{{ horse.owner.name }}</a></p>
+
 	<p>Trainer: <a href="{{ path('trainer_view', { id: horse.trainer.id }) }}">{{ horse.trainer.name }}</a></p>
 
 	{% if is_granted('ROLE_ADMIN') %}

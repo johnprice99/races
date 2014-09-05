@@ -1,10 +1,5 @@
 -- NEW FEATURES --
 
-* Generate owners, assign horses to owners, and assign trainers for the horse
-* when generating the horses, pick a random trainer and assign it to the horse
-* show owner colours in race form
-
-
 * fill out content for the "help" manual
 * Styling
 	* create a footer
@@ -31,6 +26,7 @@ http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase
 
 -- BUGS --
 
+* In the results, a horse had a result of 0 instead or R/F etc
 
 -- FUTURE CHANGES --
 

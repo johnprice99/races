@@ -33,6 +33,10 @@ class TrainerController extends Controller {
 	public function viewAction($id) {
 		$trainer = $this->getDoctrine()->getRepository('JPRaceBundle:Trainer')->find($id);
 
+		if (!$trainer) {
+			throw $this->createNotFoundException('Trainer not found');
+		}
+
 		return array(
 			'trainer' => $trainer,
 		);

@@ -10,13 +10,24 @@
 	<p>Level: {{ owner.level }}</p>
 
 	<h3>Colours:</h3>
-	<div class="silk">
-		{% include 'JPRaceBundle:Owner/Silks/Helmet:' ~ owner.helmetStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
-		{% include 'JPRaceBundle:Owner/Silks/Sleeve:' ~ owner.sleeveStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
-		{% include 'JPRaceBundle:Owner/Silks/Jersey:' ~ owner.jerseyStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
-	</div>
+	{% include 'JPRaceBundle:Owner/Silks:silk.html.twig' with { owner: owner } %}
 
 	{% if is_granted('ROLE_ADMIN') %}
 		<p><a href="{{ path('owner_edit', { id: owner.id }) }}">Edit</a></p>
 	{% endif %}
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('generate_horse', { ownerID: owner.id }) }}">Generate Horses</a></p>
+	{% endif %}
+
+	{% if owner.stable is not empty %}
+		<ul>
+			{% for horse in owner.stable %}
+				<li><a href="{{ path('horse_view', { id: horse.id }) }}">{{ horse.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No Horses</p>
+	{% endif %}
+
 {% endblock %}

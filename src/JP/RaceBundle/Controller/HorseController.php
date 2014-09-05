@@ -33,6 +33,10 @@ class HorseController extends Controller {
 	public function viewAction($id) {
 		$horse = $this->getDoctrine()->getRepository('JPRaceBundle:Horse')->find($id);
 
+		if (!$horse) {
+			throw $this->createNotFoundException('Horse not found');
+		}
+
 		return array(
 			'horse' => $horse,
 		);
