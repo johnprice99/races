@@ -1,0 +1,125 @@
+// colours: red, white, green, black, yellow, orange, purple, blue, brown, grey, black
+
+%silkCommon {
+	border: 1px solid #AAA;
+	display: block;
+}
+
+.silk {
+	@include size(70px, 36px);
+	position: relative;
+	text-align: center;
+
+	.helmet, .body, .sleeve {
+		position: absolute;
+		top: 0;
+		z-index: 2;
+		overflow: hidden;
+	}
+
+	.helmet {
+		@extend %silkCommon;
+		@include borderRadius(50%);
+		@include size(16px);
+		right: 0;
+		margin-left: -10px;
+
+		.dot, .diamond { @include sizeAndCenter(8); }
+		.star {
+			@include fontSize(10);
+			@include sizeAndCenter(10);
+		}
+	}
+
+	.body {
+		@extend %silkCommon;
+		@include borderRadius(3px);
+		@include size(24px, 36px);
+		left: 30px;
+		margin-left: -12px;
+
+		.stripeLeftRight, .stripeRightLeft {
+			@include size(60px, 8px);
+			transform-origin: top left;
+		}
+		.stripeLeftRight {
+			@include rotate(60);
+			left: 0;
+			top: -10px;
+		}
+		.stripeRightLeft {
+			@include rotate(-60);
+			left: -7px;
+			top: 40px;
+		}
+		.dot { @include sizeAndCenter(14); }
+		.diamond { @include sizeAndCenter(12); }
+		.star {
+			@include fontSize(18);
+			@include sizeAndCenter(18);
+		}
+		.chevron, &.bib {
+			@include rotate(45);
+			@include size(22px);
+			left: 50%;
+			top: -5px;
+			margin-left: -11px;
+
+			span {
+				@include size(100%);
+				position: relative;
+				display: block;
+				top: -5px;
+				left: -5px;
+			}
+		}
+		.quarterCross {
+			@include size(0);
+			border-top: 17px solid transparent;
+			border-bottom: 17px solid transparent;
+			border-left: 11px solid;
+			border-right: 11px solid;
+		}
+	}
+
+	.sleeve {
+		@extend %silkCommon;
+		@include borderRadius(3px);
+		@include size(10px, 33px);
+
+		&.left {
+			@include rotate(34);
+			left: 9px;
+		}
+
+		&.right {
+			@include rotate(-34);
+			left: 41px;
+		}
+	}
+
+	.decoration {
+		display: block;
+		position: absolute;
+
+		&.diamond { @include rotate(45); }
+		&.dot { @include borderRadius(50%); }
+		&.star { @include icon('fa-star'); }
+		&.spots { @include size(100%); }
+
+		&.quarterTop, &.quarterBottom { @include size(50%); }
+		&.quarterTop {
+			top: 0;
+			left: 0;
+		}
+		&.quarterBottom {
+			bottom: 0;
+			right: 0;
+		}
+
+		&.stripeHigh, &.stripeMiddle, &.stripeLow { @include size(100%, 5px); }
+		&.stripeHigh { top: 5px; }
+		&.stripeMiddle { top: 13px; }
+		&.stripeLow { top: 22px; }
+	}
+}

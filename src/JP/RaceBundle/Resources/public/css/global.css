@@ -10,7 +10,7 @@
   src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff?v=4.2.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.2.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
-.fa, .flashError:before, .flashWarning:before, .flashSuccess:before, .fieldWithIcon.select:before, .fieldWithIcon.date:before {
+.fa, .flashError:before, .flashWarning:before, .flashSuccess:before, .fieldWithIcon.select:before, .fieldWithIcon.date:before, .silk .decoration.star:before {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
   font-size: inherit;
@@ -67,9 +67,9 @@
 .pull-left {
   float: left; }
 
-.fa.pull-left, .pull-left.flashError:before, .pull-left.flashWarning:before, .pull-left.flashSuccess:before, .pull-left.fieldWithIcon.select:before, .pull-left.fieldWithIcon.date:before {
+.fa.pull-left, .pull-left.flashError:before, .pull-left.flashWarning:before, .pull-left.flashSuccess:before, .pull-left.fieldWithIcon.select:before, .pull-left.fieldWithIcon.date:before, .silk .pull-left.decoration.star:before {
   margin-right: .3em; }
-.fa.pull-right, .pull-right.flashError:before, .pull-right.flashWarning:before, .pull-right.flashSuccess:before, .pull-right.fieldWithIcon.select:before, .pull-right.fieldWithIcon.date:before {
+.fa.pull-right, .pull-right.flashError:before, .pull-right.flashWarning:before, .pull-right.flashSuccess:before, .pull-right.fieldWithIcon.select:before, .pull-right.fieldWithIcon.date:before, .silk .pull-right.decoration.star:before {
   margin-left: .3em; }
 
 .fa-spin {
@@ -167,7 +167,7 @@
 .fa-heart:before {
   content: ""; }
 
-.fa-star:before {
+.fa-star:before, .silk .decoration.star:before {
   content: ""; }
 
 .fa-star-o:before {
@@ -2073,3 +2073,172 @@ nav#leftMenu {
         padding: 5px 25px;
         background-color: #333;
         border-bottom: 1px solid #FFF; } }
+
+.silk .helmet, .silk .body, .silk .sleeve {
+  border: 1px solid #AAA;
+  display: block; }
+
+.silk {
+  width: 70px;
+  height: 36px;
+  position: relative;
+  text-align: center; }
+  .silk .helmet, .silk .body, .silk .sleeve {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    overflow: hidden; }
+  .silk .helmet {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    margin-left: -10px; }
+    .silk .helmet .dot, .silk .helmet .diamond {
+      width: 8px;
+      height: 8px;
+      margin-left: -4px;
+      margin-top: -4px;
+      left: 50%;
+      top: 50%; }
+    .silk .helmet .star {
+      font-size: 10px;
+      font-size: 1rem;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      margin-top: -5px;
+      left: 50%;
+      top: 50%; }
+  .silk .body {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 24px;
+    height: 36px;
+    left: 30px;
+    margin-left: -12px; }
+    .silk .body .stripeLeftRight, .silk .body .stripeRightLeft {
+      width: 60px;
+      height: 8px;
+      transform-origin: top left; }
+    .silk .body .stripeLeftRight {
+      -webkit-transform: rotate(60deg);
+      -moz-transform: rotate(60deg);
+      -o-transform: rotate(60deg);
+      -ms-transform: rotate(60deg);
+      transform: rotate(60deg);
+      left: 0;
+      top: -10px; }
+    .silk .body .stripeRightLeft {
+      -webkit-transform: rotate(-60deg);
+      -moz-transform: rotate(-60deg);
+      -o-transform: rotate(-60deg);
+      -ms-transform: rotate(-60deg);
+      transform: rotate(-60deg);
+      left: -7px;
+      top: 40px; }
+    .silk .body .dot {
+      width: 14px;
+      height: 14px;
+      margin-left: -7px;
+      margin-top: -7px;
+      left: 50%;
+      top: 50%; }
+    .silk .body .diamond {
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      margin-top: -6px;
+      left: 50%;
+      top: 50%; }
+    .silk .body .star {
+      font-size: 18px;
+      font-size: 1.8rem;
+      width: 18px;
+      height: 18px;
+      margin-left: -9px;
+      margin-top: -9px;
+      left: 50%;
+      top: 50%; }
+    .silk .body .chevron, .silk .body.bib {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      width: 22px;
+      height: 22px;
+      left: 50%;
+      top: -5px;
+      margin-left: -11px; }
+      .silk .body .chevron span, .silk .body.bib span {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: block;
+        top: -5px;
+        left: -5px; }
+    .silk .body .quarterCross {
+      width: 0;
+      height: 0;
+      border-top: 17px solid transparent;
+      border-bottom: 17px solid transparent;
+      border-left: 11px solid;
+      border-right: 11px solid; }
+  .silk .sleeve {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    width: 10px;
+    height: 33px; }
+    .silk .sleeve.left {
+      -webkit-transform: rotate(34deg);
+      -moz-transform: rotate(34deg);
+      -o-transform: rotate(34deg);
+      -ms-transform: rotate(34deg);
+      transform: rotate(34deg);
+      left: 9px; }
+    .silk .sleeve.right {
+      -webkit-transform: rotate(-34deg);
+      -moz-transform: rotate(-34deg);
+      -o-transform: rotate(-34deg);
+      -ms-transform: rotate(-34deg);
+      transform: rotate(-34deg);
+      left: 41px; }
+  .silk .decoration {
+    display: block;
+    position: absolute; }
+    .silk .decoration.diamond {
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg); }
+    .silk .decoration.dot {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%; }
+    .silk .decoration.spots {
+      width: 100%;
+      height: 100%; }
+    .silk .decoration.quarterTop, .silk .decoration.quarterBottom {
+      width: 50%;
+      height: 50%; }
+    .silk .decoration.quarterTop {
+      top: 0;
+      left: 0; }
+    .silk .decoration.quarterBottom {
+      bottom: 0;
+      right: 0; }
+    .silk .decoration.stripeHigh, .silk .decoration.stripeMiddle, .silk .decoration.stripeLow {
+      width: 100%;
+      height: 5px; }
+    .silk .decoration.stripeHigh {
+      top: 5px; }
+    .silk .decoration.stripeMiddle {
+      top: 13px; }
+    .silk .decoration.stripeLow {
+      top: 22px; }

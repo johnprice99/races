@@ -30,6 +30,12 @@ class Horse {
 	protected $trainer;
 
 	/**
+	 * @ORM\ManyToOne(targetEntity="Owner", inversedBy="stable", cascade={"persist"})
+	 * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+	 */
+	protected $owner;
+
+	/**
 	 * @ORM\Column(type="smallint", options={"unsigned":true})
 	 */
 	protected $age;
@@ -111,6 +117,14 @@ class Horse {
 
 	public function getTrainer() {
 		return $this->trainer;
+	}
+
+	public function setOwner($owner) {
+		$this->owner = $owner;
+	}
+
+	public function getOwner() {
+		return $this->owner;
 	}
 
 	public function setAge($age) {
@@ -248,12 +262,14 @@ class Horse {
 			if ($this->age < 5) {
 				return 'colt';
 			}
+
 			return 'horse';
 		}
 		else {
 			if ($this->bred || $this->age >= 5) {
 				return 'mare';
 			}
+
 			return 'filly';
 		}
 	}

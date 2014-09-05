@@ -24,47 +24,6 @@
 					<a id="showLeftNavigation" class="jsButton fa fa-bars"></a>
 				</header>
 
-				{#<nav id="leftMenu">#}
-					{#<ul>#}
-						{#<li><a href="{{ path('homepage') }}">Home</a></li>#}
-						{#<li><a href="{{ path('race_list') }}">Today's Races</a></li>#}
-
-						{#<li class="heading"><h3>Database</h3></li>#}
-						{#<li><a href="{{ path('jockey_list') }}">Jockeys</a></li>#}
-						{#<li><a href="{{ path('trainer_list') }}">Trainers</a></li>#}
-						{#<li><a href="{{ path('horse_list') }}">Horses</a></li>#}
-					{#</ul>#}
-					{#<ul id="accountNav" class="clearfix">#}
-						{#<li class="heading"><h3>Account</h3></li>#}
-						{#{% if app.user is not null and is_granted("IS_AUTHENTICATED_REMEMBERED") %}#}
-							{#<li class="left"><a href="{{ path('bet_list') }}">My Bets</a></li>#}
-							{#<span class="right clearfix">#}
-								{#<li class="left"><a href="{{ path('fos_user_profile_edit') }}">Account settings</a></li>#}
-								{#<li class="right"><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>#}
-							{#</span>#}
-						{#{% else %}#}
-							{#<span class="right clearfix">#}
-								{#<li class="left"><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>#}
-								{#<li class="right"><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>#}
-							{#</span>#}
-						{#{% endif %}#}
-					{#</ul>#}
-					{#<ul>#}
-						{#<li class="heading"><h3>Help</h3></li>#}
-						{#<li><a href="{{ path('help_page', { path: 'index' }) }}">How to play</a></li>#}
-					{#</ul>#}
-					{#{% if is_granted('ROLE_ADMIN') %}#}
-						{#<ul>#}
-							{#<li class="heading"><h3>Control Panel</h3></li>#}
-							{#<li><a href="{{ path('user_list') }}">User Management</a></li>#}
-							{#<li><a href="{{ path('generate_single_race') }}">Generate Single Race</a></li>#}
-							{#<li><a href="{{ path('generate_all_races') }}">Generate All Races</a></li>#}
-							{#<li><a href="{{ path('race_run_all') }}">Run Today's Races</a></li>#}
-							{#<li><a href="{{ path('race_clear') }}">Clear Races</a></li>#}
-						{#</ul>#}
-					{#{% endif %}#}
-				{#</nav>#}
-
 				<nav id="leftMenu">
 					<ul class="clearfix">
 						<li class="hidden"><a href="{{ path('homepage') }}">Home</a></li>
@@ -73,6 +32,7 @@
 						<li class="heading">Database</li>
 						<li>
 							<ul>
+								<li><a href="{{ path('owner_list') }}">Owners</a></li>
 								<li><a href="{{ path('jockey_list') }}">Jockeys</a></li>
 								<li><a href="{{ path('trainer_list') }}">Trainers</a></li>
 								<li><a href="{{ path('horse_list') }}">Horses</a></li>

@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ owner.name }} | Edit{% endblock %}
+
+{% block body %}
+	<p>Edit: {{ owner.name }}</p>
+
+	{{ form(form) }}
+
+	<a href="{{ path('owner_view', { id: owner.id }) }}" class="button secondary">Cancel</a>
+{% endblock %}

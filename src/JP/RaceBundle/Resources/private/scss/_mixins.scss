@@ -10,9 +10,9 @@
 }
 
 @mixin borderRadius($radius) {
-	-webkit-border-radius: $radius+px;
-	-moz-border-radius: $radius+px;
-	border-radius: $radius+px;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
 }
 
 @mixin boxShadow() {
@@ -40,6 +40,14 @@
 @mixin size($width, $height: $width) {
 	width: $width;
 	height: $height;
+}
+
+@mixin sizeAndCenter($size) {
+	@include size($size+px);
+	margin-left: -($size/2)+px;
+	margin-top: -($size/2)+px;
+	left: 50%;
+	top: 50%;
 }
 
 @mixin responsive($width) {
@@ -85,4 +93,12 @@
 	-ms-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
 	-o-transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
 	transform: translate3d($x, $y, $z) scale3d(1, 1, 1);
+}
+
+@mixin rotate($degs) {
+	-webkit-transform: rotate($degs+deg);
+	-moz-transform: rotate($degs+deg);
+	-o-transform: rotate($degs+deg);
+	-ms-transform: rotate($degs+deg);
+	transform: rotate($degs+deg);
 }

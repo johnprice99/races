@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Owners{% endblock %}
+
+{% block body %}
+	<p>All owners</p>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('generate_owner') }}">Generate Owners</a></p>
+	{% endif %}
+
+	{% if owners is not empty %}
+		<ul>
+			{% for owner in owners %}
+				<li><a href="{{ path('owner_view', { id: owner.id }) }}">{{ owner.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

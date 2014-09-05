@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ owner.name }} | Jockey{% endblock %}
+
+{% block body %}
+
+	<p><a href="{{ path('owner_list') }}">All Owners</a></p>
+
+	<p>Name: {{ owner.name }}</p>
+	<p>Level: {{ owner.level }}</p>
+
+	<h3>Colours:</h3>
+	<div class="silk">
+		{% include 'JPRaceBundle:Owner/Silks/Helmet:' ~ owner.helmetStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+		{% include 'JPRaceBundle:Owner/Silks/Sleeve:' ~ owner.sleeveStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+		{% include 'JPRaceBundle:Owner/Silks/Jersey:' ~ owner.jerseyStyle ~ '.html.twig' with { baseColor: owner.baseColor, decorationColor: owner.decorationColor } %}
+	</div>
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<p><a href="{{ path('owner_edit', { id: owner.id }) }}">Edit</a></p>
+	{% endif %}
+{% endblock %}

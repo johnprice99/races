@@ -1,5 +1,5 @@
 %flashMessage {
-	@include borderRadius(5);
+	@include borderRadius(5px);
 	@include boxShadow();
 	@include animation(fadein, 1s);
 	color: #FFF;

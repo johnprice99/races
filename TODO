@@ -1,5 +1,10 @@
 -- NEW FEATURES --
 
+* Generate owners, assign horses to owners, and assign trainers for the horse
+* when generating the horses, pick a random trainer and assign it to the horse
+* show owner colours in race form
+
+
 * fill out content for the "help" manual
 * Styling
 	* create a footer
@@ -32,8 +37,7 @@ http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase
 * horses of 2 years only race other 2 year old horses (and only short distances)
 	- need to generate 2 year old horses now too?
 * Add "going" to races and horses - better matches will give bonus to win race
-* change male horses level based on whether they have been gelded or not
-* Add colours to races - create some sort of colours generator? or is each colour associated with each owner?
+* change male horses level based on whether they have been gelded or not (behaviour)
 * Make the odds change based on how many bets there are on a particular entry (dynamic odds)
 * Ability to "buy" a horse and have it make money for you racing
 * Add paypal integration as microtransaction - £1 per 10cr in-game money, options of £1/10, £10/150, £50/1000

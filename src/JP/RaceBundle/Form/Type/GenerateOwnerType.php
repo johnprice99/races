@@ -5,7 +5,7 @@ namespace JP\RaceBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class GenerateTrainerType extends AbstractType {
+class GenerateOwnerType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
@@ -17,6 +17,6 @@ class GenerateTrainerType extends AbstractType {
 	}
 
 	public function getName() {
-		return 'generateTrainer';
+		return 'generateOwner';
 	}
 }

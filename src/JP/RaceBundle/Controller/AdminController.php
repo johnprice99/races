@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use JP\RaceBundle\Form\Type\GenerateRaceType;
 use JP\RaceBundle\Form\Type\GenerateNumberType;
 use JP\RaceBundle\Form\Type\GenerateTrainerType;
+use JP\RaceBundle\Entity\Owner;
 use JP\RaceBundle\Entity\Trainer;
 use JP\RaceBundle\Entity\Jockey;
 use JP\RaceBundle\Entity\Horse;
@@ -141,13 +142,6 @@ class AdminController extends Controller {
 				$trainer->setName($firstInitial . '. ' . $name['value']);
 				$trainer->setLevel(mt_rand(50, 95));
 
-				if ($data['generateHorses']) {
-					$horsesInStable = mt_rand(1, 5);
-					for ($h = 1; $h <= $horsesInStable; $h++) {
-						$trainer->addHorse($this->createHorse($db));
-					}
-				}
-
 				$em->persist($trainer);
 				$em->flush();
 			}
@@ -159,6 +153,63 @@ class AdminController extends Controller {
 		return array(
 			'form' => $form->createView(),
 			'genTitle' => 'trainers',
+		);
+	}
+
+	/**
+	 * @Route("/generate/owner", name="generate_owner")
+	 * @Template("JPRaceBundle:Admin:generate.html.twig")
+	 */
+	public function generateOwnerAction(Request $request) {
+		$em = $this->getDoctrine()->getManager();
+		$db = $this->get('database_connection');
+
+		$form = $this->createForm(new GenerateTrainerType());
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+
+			$possibleColours = array('red', 'white', 'green', 'black', 'yellow', 'orange', 'purple', 'blue', 'brown', 'grey', 'black');
+			$possibleStyles = array(
+				'helmet' => array('plain', 'stripes', 'radialStripes', 'dot', 'star', 'spots', 'quartered', 'diamond', 'halfVertical'),
+				'jersey' => array('plain', 'stripeHigh', 'stripeMiddle', 'stripeLow', 'stripeLeftRight', 'stripeRightLeft', 'stripeCross', 'halfVertical', 'halfHorizontal', 'hoops', 'stripes', 'radialStripes', 'dot', 'star', 'diamond', 'spots', 'chevron', 'bib', 'quarterCross', 'quartered'),
+				'sleeve' => array('plain', 'hoops', 'stripes', 'stripeHigh', 'stripeMiddle', 'stripeLow'),
+			);
+
+			$data = $form->getData();
+			for ($i = 1; $i<= $data['number']; $i++) {
+				$owner = new Owner();
+
+				//Generate a random name
+				$firstInitial = chr(mt_rand(ord('A'), ord('Z')));
+				$name = $db->fetchAssoc('SELECT * FROM `available_names` ORDER BY rand() LIMIT 1');
+				$owner->setName($firstInitial . '. ' . $name['value']);
+				$owner->setLevel(mt_rand(50, 95));
+
+				$owner->setBaseColor($possibleColours[array_rand($possibleColours)]);
+				$owner->setDecorationColor($possibleColours[array_rand($possibleColours)]);
+				$owner->setHelmetStyle($possibleStyles['helmet'][array_rand($possibleStyles['helmet'])]);
+				$owner->setJerseyStyle($possibleStyles['jersey'][array_rand($possibleStyles['jersey'])]);
+				$owner->setSleeveStyle($possibleStyles['sleeve'][array_rand($possibleStyles['sleeve'])]);
+
+				if ($data['generateHorses']) {
+					$horsesInStable = mt_rand(1, 5);
+					for ($h = 1; $h <= $horsesInStable; $h++) {
+						$owner->addHorse($this->createHorse($db));
+					}
+				}
+
+				$em->persist($owner);
+				$em->flush();
+			}
+
+			$this->get('session')->getFlashBag()->add('success', $data['number'] . ' new Owners have been created');
+			return $this->redirect($this->generateUrl('owner_list'));
+		}
+
+		return array(
+			'form' => $form->createView(),
+			'genTitle' => 'owners',
 		);
 	}
 
@@ -200,6 +251,22 @@ class AdminController extends Controller {
 	}
 
 	private function createHorse($db) {
+		//pick a random trainer for this horse
+		$em = $this->getEntityManager();
+		$max = $em->createQuery('SELECT MAX(t.id) FROM JPRaceBundle:Trainer t')->getSingleScalarResult();
+		echo $max;
+		die();
+		return $em->createQuery('
+            SELECT q FROM EnzimQuestionBundle:Question q
+            WHERE q.id >= :rand
+            ORDER BY q.id ASC
+            ')
+			->setParameter('rand',rand(0,$max))
+			->setMaxResults(1)
+			->getSingleResult();
+
+
+
 		$horse = new Horse();
 
 		$row = $db->fetchAssoc('SELECT * FROM `horse_names` ORDER BY rand() LIMIT 1');

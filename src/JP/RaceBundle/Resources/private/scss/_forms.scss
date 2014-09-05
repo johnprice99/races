@@ -20,7 +20,7 @@ label {
 }
 
 input, textarea, select {
-	@include borderRadius(5);
+	@include borderRadius(5px);
 	font-family: $defaultFontFamily;
 	padding: 10px;
 	width: 100%;
@@ -48,7 +48,7 @@ select {
 
 button, .button {
 	@include fontSize(14);
-	@include borderRadius(5);
+	@include borderRadius(5px);
 	@include boxShadow();
 	@include gradientWithHover($green);
 	border: none;
