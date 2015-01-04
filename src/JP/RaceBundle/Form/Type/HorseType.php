@@ -21,7 +21,7 @@ class HorseType extends AbstractType {
 				'required' => false,
 			))
 			->add('preferredType', 'choice', array(
-				'choices' => array('flat' => 'Flat', 'hurdle' => 'Hurdle', 'fence' => 'Fence')
+				'choices' => array('flat' => 'Flat', 'jump' => 'Jump')
 			))
 			->add('stamina', 'text')
 			->add('behaviour', 'text')

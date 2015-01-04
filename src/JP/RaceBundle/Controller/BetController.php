@@ -125,8 +125,7 @@ class BetController extends Controller {
 
 		$odds = explode('/', $bet->getOdds());
 		$winnings = $bet->getStake() + ($odds[0] * ($bet->getStake() / $odds[1]));
-		$currentBalance = $this->getUser()->getBalance();
-		$this->getUser()->setBalance($currentBalance + $winnings);
+		$this->getUser()->addCredits($winnings);
 
 		//now, delete the bet
 		$em->remove($bet);

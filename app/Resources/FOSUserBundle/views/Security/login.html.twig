@@ -5,11 +5,12 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-	<h1>Log in</h1>
 
 	{% if error %}
 		<div class="flashError">{{ error|trans }}</div>
 	{% endif %}
+
+	<h1 class="headline">Log into your account</h1>
 
 	<form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off">
 		<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -29,10 +30,9 @@
 			<label for="remember_me" class="required checkboxLabel">{{ 'security.login.remember_me'|trans }}</label>
 		</div>
 
-		<div class="formRow">
-			<button type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+		<div class="formRow clearfix">
+			<button type="submit" id="_submit" name="_submit" class="right">{{ 'security.login.submit'|trans }}</button>
+			<a href="{{ path('fos_user_resetting_request') }}" class="button secondary left">Forgotten your password?</a>
 		</div>
 	</form>
-
-	<p><a href="{{ path('fos_user_resetting_request') }}">Forgotten your password?</a></p>
 {% endblock fos_user_content %}

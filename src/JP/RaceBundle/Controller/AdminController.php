@@ -56,15 +56,12 @@ class AdminController extends Controller {
 					'class' => mt_rand(1, 3),
 				);
 
-				switch(mt_rand(1, 3)) {
+				switch(mt_rand(1, 2)) {
 					case 1:
 						$options['type'] = 'flat';
 						break;
 					case 2:
-						$options['type'] = 'fence';
-						break;
-					case 3:
-						$options['type'] = 'hurdle';
+						$options['type'] = 'jump';
 						break;
 				}
 
@@ -220,7 +217,7 @@ class AdminController extends Controller {
 				$owner->setSleeveStyle($possibleStyles['sleeve'][array_rand($possibleStyles['sleeve'])]);
 
 				if ($data['generateHorses']) {
-					$horsesInStable = mt_rand(1, 5);
+					$horsesInStable = mt_rand(1, 10);
 					for ($h = 1; $h <= $horsesInStable; $h++) {
 						$owner->addHorse($this->createHorse($db));
 					}
@@ -296,15 +293,12 @@ class AdminController extends Controller {
 			$horse->setBred(mt_rand(0, 1));
 		}
 
-		switch (mt_rand(1, 3)) {
+		switch (mt_rand(1, 2)) {
 			case 1:
 				$horse->setPreferredType('flat');
 				break;
 			case 2:
-				$horse->setPreferredType('hurdle');
-				break;
-			case 3:
-				$horse->setPreferredType('fence');
+				$horse->setPreferredType('jump');
 				break;
 		}
 

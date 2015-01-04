@@ -5,9 +5,12 @@
 {% block title %}Register{% endblock %}
 
 {% block fos_user_content %}
-	<h1>Register</h1>
 
 	{% include '::flashMessages.html.twig' %}
+
+	<h1 class="headline">Register for an account</h1>
+
+	<p>To register for an account and start playing the game, please fill out the form below.</p>
 
 	<form action="{{ path('fos_user_registration_register') }}" method="post" autocomplete="off">
 
@@ -17,8 +20,8 @@
 		{{ form_row(form.plainPassword) }}
 		{{ form_rest(form) }}
 
-		<div class="formRow">
-			<button type="submit">{{ 'registration.submit'|trans }}</button>
+		<div class="formRow clearfix">
+			<button type="submit" class="right">{{ 'registration.submit'|trans }}</button>
 		</div>
 	</form>
 {% endblock fos_user_content %}

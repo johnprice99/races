@@ -20,7 +20,7 @@ class Race {
 
 	/**
 	 * @ORM\OneToMany(targetEntity="Entry", mappedBy="race", cascade={"persist"})
-	 * @ORM\OrderBy({"finalPosition" = "ASC", "positionDrawn" = "ASC"})
+	 * @ORM\OrderBy({"finalPosition" = "ASC", "jockeyWeight" = "DESC"})
 	 */
 	protected $entries;
 

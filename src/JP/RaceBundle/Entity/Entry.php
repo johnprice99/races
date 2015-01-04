@@ -34,6 +34,11 @@ class Entry {
 	protected $jockey;
 
 	/**
+	 * @ORM\Column(type="decimal", precision=4, scale=2)
+	 */
+	protected $jockeyWeight;
+
+	/**
 	 * @ORM\Column(type="string", length=6)
 	 */
 	protected $odds;
@@ -98,6 +103,14 @@ class Entry {
 
 	public function getJockey() {
 		return $this->jockey;
+	}
+
+	public function setJockeyWeight($jockeyWeight) {
+		$this->jockeyWeight = $jockeyWeight;
+	}
+
+	public function getJockeyWeight() {
+		return $this->jockeyWeight;
 	}
 
 	public function setOdds($odds) {

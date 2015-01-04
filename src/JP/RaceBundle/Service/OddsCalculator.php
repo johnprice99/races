@@ -70,10 +70,10 @@ class OddsCalculator {
 				$entryScore -= 5; // too young or too old
 			}
 
-			//adjust based on horse preferred type (flat/jump)
-			if ($horse->getPreferredType() === $raceType) {
-				$entryScore += 10;
-			}
+			//adjust based on horse preferred type (flat/jump) - removing as you wont get a flat horse on a jump race etc
+//			if ($horse->getPreferredType() === $raceType) {
+//				$entryScore += 10;
+//			}
 
 			if ($raceDistance >= (0.75 * $this->parameters['race'][$configName]['max_distance'])) {
 				//if >75% of top distance for type of race - horses with 85+ stamina get boost

@@ -1,18 +1,23 @@
+#content form {
+	border:2px dashed $textColor;
+	padding:$defaultSpacing+px;
+}
+
 .formRow {
-	margin-bottom: 20px;
+	margin-bottom: $defaultSpacing+px;
 	&:last-child { margin-bottom: 0; }
 }
 
 label {
 	display: block;
 	width: 100%;
-	margin-bottom: 5px;
 	text-transform: uppercase;
-	font-weight: bold;
+	font-weight: normal;
+	font-family: 'Playfair Display', serif;
 
 	&.checkboxLabel {
 		float: left;
-		margin-left: 5px;
+		margin-left: 10px;
 		width: auto;
 		height: 30px;
 		line-height: 30px;
@@ -20,14 +25,15 @@ label {
 }
 
 input, textarea, select {
-	@include borderRadius(5px);
-	font-family: $defaultFontFamily;
-	padding: 10px;
+	@include fontSize(48);
+	font-family: 'Permanent Marker', cursive;
 	width: 100%;
 	outline: none;
-	border: 1px solid $grey;
-	background-color: #FFF;
+	border: none;
+	border-bottom: 1px solid $textColor;
+	background-color: $lightGrey;
 }
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px $lightGrey inset; }
 
 input[type=checkbox] {
 	width: 30px;
@@ -59,7 +65,6 @@ button, .button {
 	font-weight: bold;
 	text-decoration: none;
 	color: #FFF;
-	width: 100px;
 	text-align: center;
 
 	&.secondary { @include gradientWithHover($grey); }
@@ -72,7 +77,7 @@ button, .button {
 
 	&:before {
 		@include fontSize(16);
-		color: #000;
+		color: $textColor;
 		position: absolute;
 		right: 14px;
 		top: 50%;

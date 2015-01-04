@@ -23,8 +23,7 @@ class GenerateRaceType extends AbstractType {
 			->add('type', 'choice', array(
 				'choices' => array(
 					'flat' => 'Flat',
-					'hurdle' => 'Hurdles',
-					'fence' => 'Fences',
+					'jump' => 'Jump',
 				),
 			))
 //			->add('nursery', 'checkbox', array(

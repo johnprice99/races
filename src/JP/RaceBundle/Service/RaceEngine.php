@@ -102,7 +102,7 @@ class RaceEngine {
 				if ($race->getType() == 'flat') {
 					$horse->setFlatMaiden(false);
 				}
-				elseif ($race->getType() == 'fence' || $race->getType() == 'hurdle') {
+				elseif ($race->getType() == 'chase' || $race->getType() == 'hurdle') {
 					$horse->setJumpMaiden(false);
 				}
 			}

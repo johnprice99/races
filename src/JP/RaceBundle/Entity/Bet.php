@@ -3,6 +3,7 @@
 namespace JP\RaceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -43,6 +44,7 @@ class Bet {
 
 	/**
 	 * @ORM\Column(type="integer", options={"unsigned"=true})
+	 * @Assert\Range(min = 10, minMessage = "Minimum bet of {{ limit }}cr")
 	 */
 	protected $stake;
 

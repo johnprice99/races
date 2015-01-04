@@ -20,7 +20,7 @@
 
 #showLeftNavigation {
 	@include fontSize(32);
-	color: #000;
+	color: $textColor;
 	font-weight: normal;
 	display: none;
 	width: 64px;
@@ -65,31 +65,28 @@
 }
 
 nav#leftMenu {
-	position: fixed;
-	z-index: 999;
-	top: 0;
-	left: 0;
-	background-color: #000;
+	border-top:1px solid $textColor;
+	border-bottom:1px solid $textColor;
 	width: 100%;
 
-	h3, a {
-		color: #FFF;
+	p, a {
+		color: $textColor;
 		padding: 10px;
 	}
 
-	h3 {
-		@include fontSize(14);
-		font-weight: normal;
+	p {
+		margin: 0;
 		display: none;
 		cursor: pointer;
+		color:$lightGrey;
 	}
 
 	a {
-		color: #FFF;
+		color: $textColor;
 		text-decoration: none;
 		display: block;
 
-		&:hover, &.selected { background-color: $green; }
+		&:hover, &.selected { background-color: $textColor; color: $lightGrey; }
 	}
 
 	li {
@@ -111,18 +108,14 @@ nav#leftMenu {
 				background-color: $red;
 				position: relative;
 
-				h3 { display: block; }
+				p { display: block; }
 
 				ul {
 					min-width: 100%;
 					display: none;
 					position: absolute;
-					left: -2px;
+					left: 0px;
 					background-color: #FFF;
-					border-radius: 0 0 5px 5px;
-					border-left: 2px solid #000;
-					border-right: 2px solid #000;
-					border-bottom: 2px solid #000;
 					@include boxShadow();
 
 					li {
@@ -133,7 +126,7 @@ nav#leftMenu {
 						&:last-child { border-bottom: 0; }
 
 						a {
-							color: #000;
+							color: $textColor;
 							white-space: nowrap;
 							&:hover { background-color: #CCC; }
 						}
@@ -166,7 +159,7 @@ nav#leftMenu {
 			}
 		}
 
-		h3 {
+		p {
 			@include fontSize(12);
 			display: block;
 			color: #FFF;

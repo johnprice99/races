@@ -1,0 +1,18 @@
+%heading {
+	font-family: 'Playfair Display', serif;
+	font-weight:normal;
+	text-transform: uppercase;
+	line-height: 1;
+}
+
+.headline {
+	@extend %heading;
+	@include fontSize(32);
+	margin-bottom: $defaultSpacing+px;
+}
+
+.subheading {
+	@extend %heading;
+	@include fontSize(18);
+	margin-bottom: ($defaultSpacing/2)+px;
+}

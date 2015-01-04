@@ -5,19 +5,20 @@
 {% block title %}Password reset{% endblock %}
 
 {% block fos_user_content %}
-	<h1>Forgotten Password</h1>
 
 	{% if invalid_username is defined %}
 		<div class="flashError">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</div>
 	{% endif %}
+
+	<h1 class="headline">Forgotten Password</h1>
 
 	<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
 		<div class="formRow">
 			<label for="username" class="required">{{ 'resetting.request.username'|trans }}</label>
 			<input type="text" id="username" name="username" required="required" class="email" data-msg-required="Please enter your email address" />
 		</div>
-		<div class="formRow">
-			<button type="submit">{{ 'resetting.request.submit'|trans }}</button>
+		<div class="formRow clearfix">
+			<button type="submit" class="right">{{ 'resetting.request.submit'|trans }}</button>
 		</div>
 	</form>
 

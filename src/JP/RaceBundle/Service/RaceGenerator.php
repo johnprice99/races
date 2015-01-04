@@ -46,24 +46,14 @@ class RaceGenerator {
 		$levels = $this->parameters['race']['class_levels'][$raceClass];
 
 		//get the IDs of horses that match the criteria of the race
-		$sql = 'SELECT x.* FROM (
-			(
-				SELECT id FROM `horse`
+		$sql = 'SELECT id FROM `horse`
 				WHERE `available` = 1
 				AND `age` >= :age
 				AND preferredType = :type
 				AND level IN ('.implode(',', $levels).')'.$extraSQL.'
-				ORDER BY RAND() LIMIT '.$race->getRunnerCount().'
-			)
-			UNION
-			(
-				SELECT id FROM `horse`
-				WHERE `available` = 1
-				AND `age` >= :age
-				AND level IN ('.implode(',', $levels).')'.$extraSQL.'
-				ORDER BY RAND() LIMIT '.$race->getRunnerCount().'
-			) LIMIT '.$race->getRunnerCount().'
-		) x ORDER BY RAND()';
+				GROUP BY `owner_id`
+				ORDER BY RAND() LIMIT '.$race->getRunnerCount();
+
 		$result = $this->em->getConnection()->fetchAll($sql, array(
 			'age' => $race->getMinAge(),
 			'type' => $raceType
@@ -72,7 +62,7 @@ class RaceGenerator {
 		foreach ($result as $id) { $horsesInRace[] = $id['id']; }
 
 		if (empty($horsesInRace) || count($horsesInRace) < $race->getRunnerCount()) {
-			die('not enough horses to fill the race');
+			die('not enough horses to fill the race (need '.$race->getRunnerCount().', found '.count($horsesInRace).')');
 		}
 
 		$repository = $this->em->getRepository('JPRaceBundle:Horse');
@@ -120,6 +110,7 @@ class RaceGenerator {
 
 			$jockey = $query->getSingleResult();
 			$entry->setJockey($jockey);
+			$entry->setJockeyWeight($jockey->getNumericWeight());
 
 			//set the jockey as no longer available
 			$jockey->setAvailable(false);

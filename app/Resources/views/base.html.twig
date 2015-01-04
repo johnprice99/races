@@ -15,13 +15,15 @@
 	<body>
 		<div id="viewport">
 			<div id="pageWrap">
-
 				{#To highlight correct route#}
 				{#{% set currentRoute = app.request.getUri() %}#}
 				{#{% if "/url" in currentRoute %}#}
 
 				<header class="clearfix">
 					<a id="showLeftNavigation" class="jsButton fa fa-bars"></a>
+
+					<p class="logo">Go Racing</p>
+					<p class="date">{{ "now"|date("l, F jS, Y") }}</p>
 				</header>
 
 				<nav id="leftMenu">
@@ -58,8 +60,9 @@
 
 						{% if is_granted('ROLE_ADMIN') %}
 							<li class="hasSubMenu">
-								<h3>Admin</h3>
+								<p>Admin</p>
 								<ul>
+									<li><a href="{{ path('purchase_credits') }}">Buy 1000 Credits</a></li>
 									<li><a href="{{ path('user_list') }}">User Management</a></li>
 									<li><a href="{{ path('generate_single_race') }}">Generate Single Race</a></li>
 									<li><a href="{{ path('generate_all_races') }}">Generate All Races</a></li>
@@ -71,20 +74,38 @@
 					</ul>
 				</nav>
 
-				{% if app.user is not null %}
-					{{ app.user.balance|number_format }}cr
-				{% endif %}
+				<div class="centerContent clearfix">
+					<div class="column left">
+						{% include 'flashMessages.html.twig' %}
 
-				{% include 'flashMessages.html.twig' %}
+						{% block body %}{% endblock %}
+					</div>
+					<aside class="column right">
+						{% if app.user is not null %}
+							<!--img src="http://lorempixel.com/output/people-q-c-300-300-1.jpg" width="100%" /-->
+							<h4 class="subheading">John Price</h4>
+							<p style="text-align:right;">{{ app.user.balance|number_format }}cr</p>
 
-				{% block body %}{% endblock %}
-				<footer>&copy; Copyright {{ 'now'|date('Y') }}</footer>
+							<h4 class="subheading">Your bets</h4>
+							<h4 class="subheading">Profile</h4>
+							<h4 class="subheading">Change Password</h4>
+						{% else %}
+							<img src="http://lorempixel.com/output/animals-q-g-300-300-10.jpg" width="100%" />
+							<p><a href="#">Login</a> to your account or <a href="#">register</a> to place bets</p>
+						{% endif %}
+					</aside>
+				</div>
+
+				<footer>
+					<div class="centerContent">&copy; Copyright {{ 'now'|date('Y') }}</div>
+				</footer>
 
 			</div>
 		</div>
 
 		{% javascripts
 		'@JPRaceBundle/Resources/private/js/lib/jquery.js'
+		'@JPRaceBundle/Resources/private/js/lib/jquery.slabText.js'
 		'@JPRaceBundle/Resources/private/js/common.js' filter='?uglifyjs2' output='js/main.js' %}
 		<script type="text/javascript" src="{{ asset_url }}"></script>
 		{% endjavascripts %}

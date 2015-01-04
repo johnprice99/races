@@ -1,0 +1,83 @@
+.left { float: left; }
+
+.right { float: right; }
+
+.hidden { display: none; }
+
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after { clear: both; }
+
+html {
+	font-size: 62.5%;
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+	height: 100%;
+
+	//	padding-top: 36px;
+	background-color: $lightGrey;
+
+	//	@include responsive($mobileWidth) { padding-top: 0px; }
+}
+
+header {
+	text-align: center;
+	padding: $defaultSpacing+px;
+	position: relative;
+
+	.logo {
+		font-family: 'Playfair Display', serif;
+		@include fontSize(72);
+		font-weight: bold;
+		text-transform: uppercase;
+		text-shadow: 2px 2px 0px $lightGrey, 4px 4px 0px $textColor;
+		letter-spacing: 5px;
+	}
+	.date { @include fontSize(20); }
+
+	#creditBox {
+		border: 5px double $textColor;
+		position: absolute;
+		top: $defaultSpacing+px;
+		right: $defaultSpacing+px;
+		padding: 15px 15px 12px 15px;
+
+		small {
+			@include fontSize(14);
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.centerContent {
+	width: 1500px;
+	margin: 0 auto;
+
+	@include responsive($mobileWidth) { width: 80%; }
+}
+
+.column {
+	padding: ($defaultSpacing*2)+px 0;
+	text-align: justify;
+
+	&.left {
+		width:65%;
+	}
+	&.right {
+		width:30%;
+	}
+}
+
+footer {
+	border-top: 1px solid $textColor;
+	padding: ($defaultSpacing*2)+px 0;
+	text-align: right;
+}

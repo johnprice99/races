@@ -1,9 +1,19 @@
 -- NEW FEATURES --
 
-* fill out content for the "help" manual
+meetings - racetracks -
+
+distances - flat: 5f, 6f, 7f, 1m, 1m 1f, 1m 2f, 1.3, 1.4, 1.5, 1.6, 2, 2.2
+jump: 1.6, 2, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3, 3.2, 3.4, 4.4
+
+courses have all jumps/all flat or mixture
+wouldnt have a mixture of race types on the same day
+
+
+flat racing - goodwood, ascot, kempton, catterick, doncaster
+jump - cheltenham, ascot/doncaster (only two to do both), aintree, chepstow
+
 * Styling
-	* create a footer
-	* create content styles
+	* Inline form error message styling
 * clean up the interface a lot - make a lot more ajax calls? - angular? bb?
 
 * To show on homepage
@@ -12,9 +22,12 @@
 	- Quick little intro
 	- How it works
 
+Jockey & Trainer form
+flat jockeys & jump jockeys
+
 -- NOTES --
 
-what does number in brackets mean on race card (handicap?)
+what does number in brackets mean on race card (flat race - stall)
 http://en.wikipedia.org/wiki/Racecard
 http://www.horse-smart.com/definitions.htm
 http://en.wikipedia.org/wiki/Form_(horse_racing)
@@ -27,12 +40,12 @@ http://freeracingtips.com/whats-the-difference-between-a-hurdle-race-and-a-chase
 -- BUGS --
 
 
-
 -- FUTURE CHANGES --
 
 * horses of 2 years only race other 2 year old horses (and only short distances)
 	- need to generate 2 year old horses now too?
 * Add "going" to races and horses - better matches will give bonus to win race
+	- firm, good, soft, heavy (horses weight plays a part)
 * change male horses level based on whether they have been gelded or not (behaviour)
 * Make the odds change based on how many bets there are on a particular entry (dynamic odds)
 * Ability to "buy" a horse and have it make money for you racing

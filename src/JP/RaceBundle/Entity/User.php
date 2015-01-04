@@ -50,4 +50,8 @@ class User extends BaseUser {
 		$this->bets->add($bet);
 	}
 
+	public function addCredits($amount) {
+		$this->balance += $amount;
+	}
+
 }

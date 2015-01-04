@@ -3,12 +3,23 @@
 {% block title %}Horses{% endblock %}
 
 {% block body %}
-	<p>All horses</p>
+	<h1 class="headline">Available horses</h1>
+	<p>Below is a list of all horses within the game. You can search for a particular horse using the form below. Click on the horse to view more information.</p>
+
+	<form>
+		<label for="searchFilter">Name</label>
+		<input id="searchFilter" placeholder="Filter..." value="" />
+	</form>
 
 	{% if horses is not empty %}
-		<ul>
+		<ul class="dataList">
 			{% for horse in horses %}
-				<li><a href="{{ path('horse_view', { id: horse.id }) }}">{{ horse.name }}</a></li>
+				<li>
+					<a class="clearfix" href="{{ path('horse_view', { id: horse.id }) }}">
+						<span class="left">{{ horse.name }}</span> {#<small>{{ horse.age }} year old {{ horse.description }}</small>#}
+						<span class="right">{{ horse.owner.name }}</span>
+					</a>
+				</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
